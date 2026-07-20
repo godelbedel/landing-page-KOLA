@@ -1,16 +1,9 @@
 import type { Request, Response } from "express";
 import { GoogleGenAI } from "@google/genai";
 
-function getGeminiClient(apiKey: string): GoogleGenAI {
-  return new GoogleGenAI({
-    apiKey,
-    httpOptions: {
-      headers: {
-        "User-Agent": "aistudio-build",
-      },
-    },
-  });
-}
+const ai = new GoogleGenAI({
+  apiKey: process.env.GEMINI_API_KEY,
+});
 
 const systemInstruction = `Anda adalah "Min-Ji", asisten konsultasi AI virtual dari KOLA - PT. KOREA EDU WORK INTERNATIONAL.
 Tugas Anda adalah melayani konsultasi gratis bagi calon pelajar/pekerja Indonesia yang ingin kuliah dan bekerja di Korea Selatan melalui program resmi kami.
@@ -68,8 +61,16 @@ Target Anda:
 3. Di akhir jawaban Anda secara alami, ajak mereka untuk mengisi formulir pendaftaran gratis di website agar Bapak Heri Purwanto (Konsultan Utama) bisa langsung menghubungi mereka via WhatsApp untuk mengatur jadwal interview kampus.`;
 
 export default async function handler(req: Request, res: Response) {
+  // Tambahan CORS biar nggak diblokir browser
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+
+  if (req.method === "OPTIONS") {
+    return res.status(200).end();
+  }
+
   if (req.method !== "POST") {
-    res.setHeader("Allow", "POST");
     return res.status(405).json({ error: "Method not allowed." });
   }
 
@@ -79,59 +80,30 @@ export default async function handler(req: Request, res: Response) {
     return res.status(400).json({ error: "Format request tidak valid." });
   }
 
-  const apiKey = process.env.GEMINI_API_KEY;
-  if (!apiKey) {
+  if (!process.env.GEMINI_API_KEY) {
     return res.status(500).json({ 
       error: "Gagal menghubungi asisten AI.", 
-      details: "GEMINI_API_KEY environment variable is missing inside Vercel scope." 
+      details: "API Key belum terbaca di Vercel." 
     });
   }
 
   try {
-    const client = getGeminiClient(apiKey);
     const contents = messages.map((message: { role?: string; text?: string }) => ({
       role: message.role === "user" ? "user" : "model",
       parts: [{ text: typeof message.text === "string" ? message.text : "" }],
     }));
 
-    const modelsToTry = [
-      "gemini-2.5-flash",
-      "gemini-1.5-flash"
-    ];
-    const maxRetriesPerModel = 2;
-
-    for (const model of modelsToTry) {
-      for (let attempt = 1; attempt <= maxRetriesPerModel; attempt += 1) {
-        try {
-          const response = await client.models.generateContent({
-            model,
-            contents,
-            config: { systemInstruction, temperature: 0.7 },
-          });
-
-          return res.status(200).json({ text: response.text });
-        } catch (error: unknown) {
-          console.error(`Gemini ${model} attempt ${attempt} failed:`, error);
-
-          const isLastAttempt = attempt === maxRetriesPerModel;
-          const isLastModel = model === modelsToTry[modelsToTry.length - 1];
-          if (isLastAttempt && isLastModel) {
-            throw error;
-          }
-
-          await new Promise((resolve) => setTimeout(resolve, attempt * 500));
-        }
-      }
-    }
-
-    throw new Error("All models and retries failed.");
-  } catch (error: unknown) {
-    console.error("Gemini AI API Error:", error);
-    const details = error instanceof Error ? error.message : String(error);
-
-    return res.status(500).json({
-      error: "Gagal menghubungi asisten AI.",
-      details,
+    // HANYA gunakan model yang 100% valid
+    const response = await ai.models.generateContent({
+      model: "gemini-1.5-flash",
+      contents: contents,
+      config: { systemInstruction, temperature: 0.7 },
     });
+
+    return res.status(200).json({ text: response.text });
+  } catch (error: unknown) {
+    console.error("Gemini Error:", error);
+    const details = error instanceof Error ? error.message : String(error);
+    return res.status(500).json({ error: "Gagal menghubungi asisten AI.", details });
   }
 }
