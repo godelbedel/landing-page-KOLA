@@ -1,27 +1,15 @@
 import type { Request, Response } from "express";
 import { GoogleGenAI } from "@google/genai";
 
-let aiClient: GoogleGenAI | null = null;
-
-function getGeminiClient(): GoogleGenAI {
-  if (!aiClient) {
-    const apiKey = process.env.GEMINI_API_KEY;
-
-    if (!apiKey) {
-      throw new Error("GEMINI_API_KEY environment variable is required but missing.");
-    }
-
-    aiClient = new GoogleGenAI({
-      apiKey,
-      httpOptions: {
-        headers: {
-          "User-Agent": "aistudio-build",
-        },
+function getGeminiClient(apiKey: string): GoogleGenAI {
+  return new GoogleGenAI({
+    apiKey,
+    httpOptions: {
+      headers: {
+        "User-Agent": "aistudio-build",
       },
-    });
-  }
-
-  return aiClient;
+    },
+  });
 }
 
 const systemInstruction = `Anda adalah "Min-Ji", asisten konsultasi AI virtual dari KOLA - PT. KOREA EDU WORK INTERNATIONAL.
@@ -75,7 +63,7 @@ Gunakan pengetahuan resmi berikut untuk menjawab semua pertanyaan dengan tepat:
      - Garansi refund sisa semester jika dalam 6 bulan sudah lulus TOPIK 3.
 
 Target Anda:
-1. Jawab pertanyaan mereka dengan jelas, ramah, dan penuh semangat menggunakan emoji 🌸🇰🇷.
+1. Jawab pertanyaan mereka dengan jelas, ramah, dan penuh semangat menggunakan emoji 🌸.
 2. Bandingkan dan rekomendasikan program yang paling pas dengan profil mereka secara objektif berdasarkan batasan umur, nilai rapor, dan kesiapan bahasa mereka.
 3. Di akhir jawaban Anda secara alami, ajak mereka untuk mengisi formulir pendaftaran gratis di website agar Bapak Heri Purwanto (Konsultan Utama) bisa langsung menghubungi mereka via WhatsApp untuk mengatur jadwal interview kampus.`;
 
@@ -91,17 +79,24 @@ export default async function handler(req: Request, res: Response) {
     return res.status(400).json({ error: "Format request tidak valid." });
   }
 
+  const apiKey = process.env.GEMINI_API_KEY;
+  if (!apiKey) {
+    return res.status(500).json({ 
+      error: "Gagal menghubungi asisten AI.", 
+      details: "GEMINI_API_KEY environment variable is missing inside Vercel scope." 
+    });
+  }
+
   try {
-    const client = getGeminiClient();
+    const client = getGeminiClient(apiKey);
     const contents = messages.map((message: { role?: string; text?: string }) => ({
       role: message.role === "user" ? "user" : "model",
       parts: [{ text: typeof message.text === "string" ? message.text : "" }],
     }));
 
     const modelsToTry = [
-      "gemini-3.5-flash",
-      "gemini-3.1-flash-lite",
-      "gemini-flash-latest",
+      "gemini-2.5-flash",
+      "gemini-1.5-flash"
     ];
     const maxRetriesPerModel = 2;
 
