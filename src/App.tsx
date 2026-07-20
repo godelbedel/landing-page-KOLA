@@ -46,7 +46,7 @@ interface ChatMessage {
 }
 
 const partnerUniversities = [
-  // Caregiver
+  // 1. Caregiver / Beauty / Business (20 campuses)
   { name: "Sahmyook Health University", location: "Seoul", type: "caregiver", programs: ["Caregiver (D2)", "Global Care (D2)"], merit: "Kampus kesehatan ternama di ibukota Seoul dengan koneksi kerja rumah sakit lansia elit." },
   { name: "Suncheon Jeil College", location: "Suncheon", type: "caregiver", programs: ["Caregiver (D2)", "K-Beauty (D2)"], merit: "Biaya hidup terjangkau, asrama modern, dan kemitraan industri luas di wilayah Selatan." },
   { name: "Mokpo Science University", location: "Mokpo", type: "caregiver", programs: ["Caregiver (D2)", "K-Bisnis (D2)"], merit: "Terkenal dengan pengajaran vokasi praktikal dan program penempatan kerja pasca kelulusan terbaik." },
@@ -54,13 +54,99 @@ const partnerUniversities = [
   { name: "Daegu Health University", location: "Daegu", type: "caregiver", programs: ["Caregiver (D2)", "K-Beauty (D2)"], merit: "Fasilitas simulasi medis terlengkap, lingkungan kota besar metropolitan Daegu." },
   { name: "Gwangju Health University", location: "Gwangju", type: "caregiver", programs: ["Caregiver (D2)"], merit: "Pendidikan klinis komprehensif dengan jaringan magang di lebih dari 40 rumah sakit." },
   { name: "Seojeong College", location: "Yangju", type: "caregiver", programs: ["Caregiver (D2)", "K-Beauty (D2)"], merit: "Berlokasi strategis di dekat wilayah metropolitan Seoul, akomodasi asrama baru." },
-  
-  // Technical / D4
+  { name: "Kyungbuk College", location: "Yeongju", type: "caregiver", programs: ["Caregiver (D2)", "Global Care (D2)"], merit: "Fokus pada kenyamanan belajar dengan fasilitas asrama berstandar internasional." },
+  { name: "Vision University of Jeonju", location: "Jeonju", type: "caregiver", programs: ["Caregiver (D2)", "K-Bisnis (D2)"], merit: "Menyediakan program beasiswa khusus untuk mahasiswa asing berprestasi akademik tinggi." },
+  { name: "Cheongju University", location: "Cheongju", type: "caregiver", programs: ["K-Beauty (D2)", "K-Bisnis (D2)"], merit: "Kampus modern dengan kurikulum bisnis internasional dan tren kosmetika K-Beauty terkini." },
+  { name: "Baekseok Culture University", location: "Cheonan", type: "caregiver", programs: ["Caregiver (D2)", "K-Beauty (D2)"], merit: "Menawarkan kombinasi pelatihan keahlian praktis dan pendidikan karakter berorientasi global." },
+  { name: "Keimyung College University", location: "Daegu", type: "caregiver", programs: ["K-Beauty (D2)", "Global Care (D2)"], merit: "Memiliki pusat kebudayaan internasional dan fasilitas praktek kecantikan tercanggih." },
+  { name: "Dong-A University", location: "Busan", type: "caregiver", programs: ["K-Bisnis (D2)", "Caregiver (D2)"], merit: "Kampus elit di Busan dengan program pengembangan karir internasional yang sangat kuat." },
+  { name: "Busan Women's College", location: "Busan", type: "caregiver", programs: ["Caregiver (D2)", "K-Beauty (D2)"], merit: "Spesialis dalam mendidik profesional wanita mandiri dengan tingkat penempatan kerja 95%." },
+  { name: "Masan University", location: "Changwon", type: "caregiver", programs: ["Caregiver (D2)", "Global Care (D2)"], merit: "Koneksi magang yang erat dengan berbagai yayasan medis terkemuka di wilayah Selatan." },
+  { name: "Koje College", location: "Geoje", type: "caregiver", programs: ["Caregiver (D2)", "K-Bisnis (D2)"], merit: "Mendapat pendanaan khusus dari pemerintah Korea untuk program vokasi mahasiswa asing." },
+  { name: "Yeungnam University College", location: "Daegu", type: "caregiver", programs: ["Caregiver (D2)", "K-Beauty (D2)"], merit: "Kurikulum terpadu dengan integrasi teknologi modern pada layanan keperawatan lansia." },
+  { name: "Hanyang Women's University", location: "Seoul", type: "caregiver", programs: ["K-Beauty (D2)", "K-Bisnis (D2)"], merit: "Lokasi prestisius di Seoul dengan kurikulum desain mode dan kecantikan berstandar dunia." },
+  { name: "Kyung-In Women's University", location: "Incheon", type: "caregiver", programs: ["K-Beauty (D2)", "Caregiver (D2)"], merit: "Pusat pelatihan kecantikan dan kesehatan terkemuka di wilayah metropolitan Incheon." },
+  { name: "Shingu College", location: "Seongnam", type: "caregiver", programs: ["K-Bisnis (D2)", "Global Care (D2)"], merit: "Kampus hijau yang asri dengan kemitraan bisnis luas di kota teknologi Seongnam." },
+
+  // 2. Engineering / Electrical / Automotive / Future Mobility / Textile / Agriculture (16 campuses)
   { name: "Gyeonggi Institute of Technology", location: "Siheung", type: "technical", programs: ["Teknik Otomotif (D4/D2)", "Elektrikal (D4/D2)"], merit: "Kampus teknik terdepan di kawasan industri terbesar Siheung-Ansan, kerja sama langsung dengan Hyundai." },
   { name: "Daelim University", location: "Anyang", type: "technical", programs: ["Teknik Otomotif (D4)", "Energi Terbarukan (D4)"], merit: "Dekat dengan Seoul, salah satu kampus vokasi teknik dengan reputasi penyerapan lulusan kerja tertinggi." },
   { name: "Inha Technical College", location: "Incheon", type: "technical", programs: ["Teknik Otomotif (D4)", "Mekanik Presisi (D4)"], merit: "Berafiliasi langsung dengan Inha University, kualitas pendidikan teknik papan atas Korea Selatan." },
   { name: "Ajou Motor College", location: "Boryeong", type: "technical", programs: ["Teknik Otomotif (D4)", "Kendaraan Listrik (EV) (D4)"], merit: "Satu-satunya perguruan tinggi khusus otomotif di Korea Selatan, pusat riset kendaraan elektrik masa depan." },
-  { name: "Ulsan College", location: "Ulsan", type: "technical", programs: ["Mesin & Konstruksi (D4)", "Smart Farming (D4)"], merit: "Didirikan oleh Hyundai Heavy Industries, terletak di jantung kota industri raksasa Ulsan." }
+  { name: "Ulsan College", location: "Ulsan", type: "technical", programs: ["Mesin & Konstruksi (D4)", "Smart Farming (D4)"], merit: "Didirikan oleh Hyundai Heavy Industries, terletak di jantung kota industri raksasa Ulsan." },
+  { name: "Yeungjin University", location: "Daegu", type: "technical", programs: ["Teknik Otomotif (D4)", "Elektrikal (D4)"], merit: "Pemenang penghargaan nasional untuk tingkat perekrutan kerja mahasiswa asing terbaik." },
+  { name: "Gumi University", location: "Gumi", type: "technical", programs: ["Mekanik Presisi (D4)", "Elektrikal (D4)"], merit: "Berada di pusat industri elektronik Gumi, berpartner dengan Samsung dan LG." },
+  { name: "Korea University of Technology", location: "Cheonan", type: "technical", programs: ["Teknik Otomotif (D4)", "Textile (D4)"], merit: "Fokus pada riset terapan dan inovasi teknologi industri masa depan dengan fasilitas laboratorium modern." },
+  { name: "Dong-Eui Institute of Technology", location: "Busan", type: "technical", programs: ["Teknik Otomotif (D4)", "Elektrikal (D4)"], merit: "Pendidikan teknik berkualitas dengan bimbingan karir komprehensif di kota metropolitan Busan." },
+  { name: "Chosun College of Science and Technology", location: "Gwangju", type: "technical", programs: ["Mekanik Presisi (D4)", "Future Mobility (D4)"], merit: "Memiliki pusat simulasi kendaraan masa depan (Autonomous & EV) tercanggih." },
+  { name: "Incheon National University", location: "Incheon", type: "technical", programs: ["Future Mobility (D4)", "Textile (D4)"], merit: "Kampus global modern di Songdo Smart City dengan jaringan riset internasional." },
+  { name: "Hanbat National University", location: "Daejeon", type: "technical", programs: ["Elektrikal (D4)", "Mekanik Presisi (D4)"], merit: "Kampus nasional prestisius di Daejeon, lembah silikon Korea Selatan." },
+  { name: "Kumoh National Institute of Technology", location: "Gumi", type: "technical", programs: ["Mekanik Presisi (D4)", "Future Mobility (D4)"], merit: "Didirikan oleh mantan presiden Korea untuk mencetak insinyur industri terbaik nasional." },
+  { name: "Seoul National University of Science", location: "Seoul", type: "technical", programs: ["Elektrikal (D4)", "Textile (D4)"], merit: "Salah satu universitas negeri terbaik di Seoul yang berfokus pada teknologi terapan tingkat lanjut." },
+  { name: "Pukyong National University", location: "Busan", type: "technical", programs: ["Agriculture (D4)", "Mekanik Presisi (D4)"], merit: "Memiliki fasilitas riset pertanian laut dan agro-pangan berteknologi tinggi." },
+  { name: "Changwon National University", location: "Changwon", type: "technical", programs: ["Teknik Otomotif (D4)", "Future Mobility (D4)"], merit: "Terletak di komplek industri Changwon dengan kemitraan erat bersama ratusan industri manufaktur." },
+
+  // 3. Root Industry (14 campuses)
+  { name: "Jeonju Technical College", location: "Jeonju", type: "root", programs: ["Pengelasan (Welding) (D2)", "Casting/Molding (D2)"], merit: "Pusat keunggulan pelatihan industri dasar (Root Industry) dengan jaminan konversi visa E7 tercepat." },
+  { name: "Mokpo National Maritime University", location: "Mokpo", type: "root", programs: ["Mesin Kapal (D2)", "Perakitan Logam (D2)"], merit: "Kampus maritim nasional terkemuka dengan akses penempatan kerja di galangan kapal raksasa Korea." },
+  { name: "Tongmyong University", location: "Busan", type: "root", programs: ["Molding & Press (D2)", "Pengecoran (D2)"], merit: "Fasilitas simulasi pabrik pintar (Smart Factory) untuk pelatihan Root Industry modern." },
+  { name: "Sunchon National University", location: "Suncheon", type: "root", programs: ["Permukaan Logam (Surface Treat) (D2)"], merit: "Didukung penuh oleh Posco Steel untuk penempatan kerja industri pengolahan logam." },
+  { name: "Kunsan National University", location: "Gunsan", type: "root", programs: ["Mesin Perkakas (D2)", "Welding (D2)"], merit: "Universitas negeri dengan klaster industri otomotif dan Root Industry yang sangat maju." },
+  { name: "Kyonggi University", location: "Suwon", type: "root", programs: ["Molding (D2)", "Casting (D2)"], merit: "Dekat dengan Seoul, menyediakan beasiswa industri khusus untuk pendaftar Root Industry." },
+  { name: "Dongguk University", location: "Gyeongju", type: "root", programs: ["Welding (D2)", "Mekanik Dasar (D2)"], merit: "Fasilitas pengajaran berakar kuat pada nilai-nilai tradisi dengan kurikulum industri modern." },
+  { name: "Kangwon National University", location: "Samcheok", type: "root", programs: ["Mesin Tambang & Logam (D2)"], merit: "Spesialis dalam pelatihan teknik material dasar dan manufaktur logam berat." },
+  { name: "Daegu University", location: "Gyeongsan", type: "root", programs: ["Welding (D2)", "Casting (D2)"], merit: "Kampus inklusif dengan pusat karir yang aktif mendampingi izin kerja legal siswa asing." },
+  { name: "Youngsan University", location: "Yangsan", type: "root", programs: ["Welding & Assembly (D2)"], merit: "Lokasi strategis di area industri Busan-Ulsan-Gyeongnam dengan ratusan mitra pabrik." },
+  { name: "Catholic University of Pusan", location: "Busan", type: "root", programs: ["Molding & Press (D2)"], merit: "Program pengembangan karakter dan kompetensi industri dasar dengan asrama komprehensif." },
+  { name: "Gyeongnam National University", location: "Jinju", type: "root", programs: ["Mesin Kapal (D2)", "Welding (D2)"], merit: "Kampus negeri hasil penggabungan dua universitas ternama dengan fokus industri manufaktur kokoh." },
+  { name: "Andong National University", location: "Andong", type: "root", programs: ["Welding (D2)", "Molding (D2)"], merit: "Universitas negeri berbiaya kuliah sangat rendah dengan fasilitas asrama bersubsidi penuh." },
+  { name: "Jeju National University", location: "Jeju", type: "root", programs: ["Welding (D2)", "Mesin Dasar (D2)"], merit: "Belajar di pulau wisata dunia Jeju dengan fasilitas laboratorium manufaktur yang sangat lengkap." }
+];
+
+const confettiCount = 50;
+const confettiColors = ["#003174", "#B81D2D", "#FBBF24", "#34D399", "#60A5FA", "#EC4899"];
+
+const confettiParticles = Array.from({ length: confettiCount }).map((_, i) => {
+  const angle = Math.random() * Math.PI * 2;
+  const distance = 40 + Math.random() * 150;
+  const x = Math.cos(angle) * distance;
+  const y = Math.sin(angle) * distance - 10;
+  const rotation = Math.random() * 360;
+  return {
+    id: i,
+    x,
+    y,
+    rotation,
+    color: confettiColors[i % confettiColors.length],
+    size: 5 + Math.random() * 9,
+    delay: Math.random() * 0.15,
+  };
+});
+
+const tickVariants = {
+  hidden: { pathLength: 0, opacity: 0 },
+  visible: {
+    pathLength: 1,
+    opacity: 1,
+    transition: { duration: 0.6, ease: "easeInOut", delay: 0.3 }
+  }
+};
+
+const circleVariants = {
+  hidden: { scale: 0, opacity: 0 },
+  visible: {
+    scale: 1,
+    opacity: 1,
+    transition: { type: "spring", stiffness: 260, damping: 20 }
+  }
+};
+
+const navItems = [
+  { id: "keunggulan", label: "Keunggulan" },
+  { id: "program", label: "Pilihan Program" },
+  { id: "alur", label: "Alur Pendaftaran" },
+  { id: "biaya", label: "Transparansi Biaya" },
+  { id: "faq", label: "FAQ" }
 ];
 
 export default function App() {
@@ -93,7 +179,7 @@ export default function App() {
   const [chatMessages, setChatMessages] = useState<ChatMessage[]>([
     {
       role: "model",
-      text: "Halo! Saya Min-Ji, konsultan AI virtual Korea Edu Work. 🌸\n\nAda yang bisa saya bantu terkait program Kuliah Vokasi atau Kuliah Kerja ke Korea Selatan? Silakan tanyakan apa saja seperti biaya, persyaratan, atau pilihan jurusan!"
+      text: "Halo! Saya Min-Ji, konsultan AI virtual K-BRIDGE EDU INTERNATIONAL. 🌸\n\nAda yang bisa saya bantu terkait program Kuliah Vokasi atau Kuliah Kerja ke Korea Selatan? Silakan tanyakan apa saja seperti biaya, persyaratan, atau pilihan jurusan!"
     }
   ]);
   const [userInput, setUserInput] = useState("");
@@ -117,7 +203,25 @@ export default function App() {
 
   // Partner Universities search & filter states
   const [univSearch, setUnivSearch] = useState("");
-  const [univCategory, setUnivCategory] = useState<"all" | "caregiver" | "technical">("all");
+  const [univCategory, setUnivCategory] = useState<"all" | "caregiver" | "technical" | "root">("all");
+  const [showAllUniversities, setShowAllUniversities] = useState(false);
+
+  // Hero Image Slider State
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const heroSlides = [
+    "/image/slide2.jpg",
+    "/image/slide1.jpg",
+    "/image/slide3.jpg",
+    "/image/slide4.jpg",
+    "/image/slide5.jpg"
+  ];
+
+  useEffect(() => {
+    const slideInterval = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
+    }, 3500);
+    return () => clearInterval(slideInterval);
+  }, [heroSlides.length]);
 
   // Scroll to Top state
   const [showScrollTop, setShowScrollTop] = useState(false);
@@ -129,6 +233,44 @@ export default function App() {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  useEffect(() => {
+    const sections = ["keunggulan", "program", "alur", "biaya", "faq"];
+    const observerOptions = {
+      root: null,
+      rootMargin: "-25% 0px -55% 0px", // triggers active state when section takes up the center of the viewport
+      threshold: 0,
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          setActiveTab(entry.target.id);
+        }
+      });
+    }, observerOptions);
+
+    sections.forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+
+    return () => {
+      sections.forEach((id) => {
+        const el = document.getElementById(id);
+        if (el) observer.unobserve(el);
+      });
+    };
+  }, []);
+
+  const handleNavClick = (id: string, e: React.MouseEvent) => {
+    e.preventDefault();
+    setActiveTab(id);
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  };
 
   useEffect(() => {
     if (chatEndRef.current) {
@@ -192,7 +334,7 @@ export default function App() {
       setPortalError("");
       fetchLeads();
     } else {
-      setPortalError("Sandi salah. Coba gunakan 'korea123' untuk uji coba.");
+      setPortalError("Sandi salah");
     }
   };
 
@@ -270,7 +412,7 @@ export default function App() {
       title: "Pemberangkatan & Orientasi",
       icon: "flight_takeoff",
       desc: "Pembekalan pra-keberangkatan, pelepasan resmi di bandara, penerbangan ke Korea Selatan, penjemputan di Bandara Incheon, dan pengantaran ke asrama.",
-      details: "Perwakilan KOLA yang berdomisili di Korea Selatan akan menyambut Anda langsung di bandara, membantu orientasi lingkungan, pengurusan kartu tanda pengenal (ARC), dan sim card."
+      details: "Perwakilan K-BRIDGE yang berdomisili di Korea Selatan akan menyambut Anda langsung di bandara, membantu orientasi lingkungan, pengurusan kartu tanda pengenal (ARC), dan sim card."
     },
     {
       title: "Kuliah & Kerja Sampingan (Alba)",
@@ -294,24 +436,32 @@ export default function App() {
 
   const faqs = [
     {
-      q: "Apakah program ini benar-benar menjamin pekerjaan di Korea?",
-      a: "Ya! Melalui visa pendaftaran resmi (D2 untuk vokasi atau D4 untuk bahasa) dan kemitraan erat dengan industri di Korea Selatan, Anda mendapatkan jaminan legalitas untuk bekerja paruh waktu selama kuliah. Setelah lulus, universitas bekerja sama dengan KOLA untuk langsung mengonversi visa Anda ke Visa Kerja Profesional E7 atau E-7M (K-Core) yang memungkinkan Anda bekerja full-time secara profesional."
+      q: "Berapa lama kuliah ?",
+      a: "Kuliah vokasi ini seminggu 2 hari kali tatap muka selama 2 tahun dan libur semester 2 bulan, jadi aktual kuliah hanya 4 bulan dan sisa harinya wajib kerja sampingan.\n\nSetelah selesai kuliah diberikan Visa E7 kontrak 3 tahun dan update Visa F2 yaitu visa permanent residence hingga usia 55 tahun."
     },
     {
-      q: "Bagaimana jika saya sama sekali tidak mengerti bahasa Korea?",
-      a: "Bagi Anda yang memilih Jalur D2 Vokasi (khusus Caregiver, K-Beauty, dan K-Bisnis), tidak ada persyaratan sertifikat bahasa Korea (TOPIK) di awal. Anda akan mendapatkan pembekalan intensif bahasa Korea dasar sebelum berangkat dari tim KOLA. Bagi yang memilih bidang teknik lainnya, disarankan mengambil jalur D4 (Kuliah Bahasa) terlebih dahulu selama 6-12 bulan untuk mengejar syarat TOPIK."
+      q: "Apa itu kuliah Vokasi & Pilihan jurusan ?",
+      a: "Program kuliah Vokasi adalah kuliah skill keahalian dan lebih banyak praktik lapangan, jadi bukan kuliah Akademik yang harus menyelesaikan Skipsi & mata kuliah tertentu.\n\nSeleksi ada 2 skema yaitu via interview dan dokumen.\n\n- Jurusan Caregiver & Beauty Non Topik (tidak perlu sertifikat bahasa Topik)\n- Jurusan selain Caregiver & Beauty WAJIB ADA TOPIK minimal Topik 3."
     },
     {
-      q: "Berapa jam kerja sampingan yang diizinkan selama kuliah?",
-      a: "Sesuai hukum Imigrasi Korea, mahasiswa asing diizinkan bekerja paruh waktu 20 s.d 30 jam per minggu selama masa kuliah, dan FULL TIME (tanpa batasan jam) pada saat libur semester (musim panas & dingin). Gaji rata-rata part-time berkisar Rp 12 - 15 Juta per bulan."
+      q: "Kemampuan bahasa & seleksi interview ?",
+      a: "Seleksi interview dimulai dari Perkenalan diri pakai bahasa korea dan dilanjut beberapa pertanyaan dasar lainnya, point penting adalah jika perkenalan diri lancar 90% diterima.\n\nBahasa menjadi wajib karena penyampaian materi menggunakan bahasa korea.\n\nStandar bahasa untuk PMI nilai EPS Topik adalah 85 dan bagi Pemula minimal sudah belajar bahasa 3 bulan, PMI yg habis Roster juga lebih dari cukup, Khusus Pemilik sertifikat TOPIK 3 ke atas ada beasiswa."
     },
     {
-      q: "Berapa total rincian biaya program D2 dan D4?",
-      a: "Sangat transparan. Biaya ALL IN resmi pendaftaran kampus untuk Jalur D2 Vokasi adalah Rp 74,9 Juta, sedangkan untuk Jalur D4 Bahasa adalah Rp 65,1 Juta. Seluruh pembayaran dilakukan secara bertahap langsung ke Virtual Account (VA) resmi atas nama kampus Anda sendiri di Korea Selatan. Biaya tersebut sudah mencakup uang kuliah semester pertama, asuransi kesehatan, visa, bimbingan dokumen, hingga tiket pesawat."
+      q: "Apakah kerja sampingan dicarikan?",
+      a: "Sebenarnya Kerja sampingan bebas untuk cari sendiri namun dari pihak agen di korea juga bisa bantu carikan jobnya.\n\nNamun setelah wisuda diberikan Visa E7 dan penempatan kerja oleh kampus sesuai bidang jurusan kuliahnya."
+    },
+    {
+      q: "Apakah pendapatan cukup untuk bayar kuliah ?",
+      a: "Gaji UMR korea tahun 2026 adalah KRW 10.200/jam.\n\nPerhitungan kerja sampingan:\n- Kerja 4 hari 8 jam dalam 1 bulan IDR 15.500.000\n- Libur semester 2 bulan gaji full day harian KRW 150.000 (IDR 1.800.000/hari) 6 hari kerja selama 2 bulan adalah IDR 85jt.\n\nArtinya penghasilan selama libur kuliah sudah mencukupi untuk membayar biaya UKT dan asrama."
+    },
+    {
+      q: "Bagaimana Pembayaran proses?",
+      a: "Pembayaran proses secara bertahap sesuai instruksi dan invoice dari kampus dan juga pembayaran langsung ke kampus."
     },
     {
       q: "Apakah lulusan SMA/SMK/MA/Paket C bisa mendaftar?",
-      a: "Bisa! Persyaratan akademis minimal adalah lulusan SMA, SMK, Madrasah Aliyah (MA), atau Kejar Paket C setara SMA. Untuk Jalur D2 Vokasi usia maksimal mencapai 35 tahun, sedangkan Jalur D4 Bahasa maksimal 3 tahun setelah tahun kelulusan sekolah."
+      a: "Bisa! Persyaratan akademis minimal adalah lulusan SMA, SMK, Madrasah Aliyah (MA), atau Kejar Paket C setara SMA. Untuk Jalur D2 Vokasi usia maksimal mencapai 35 tahun, sedangkan Jalur D4 Bahasa maksimal 5 tahun setelah tahun kelulusan sekolah."
     }
   ];
 
@@ -323,40 +473,59 @@ export default function App() {
         <div className="max-w-7xl mx-auto px-4 md:px-8 flex justify-between items-center h-20">
           
           {/* Brand Logo & Name */}
-          <a href="#" className="flex items-center gap-3 hover:scale-[1.02] transition-transform duration-200">
-            <div className="bg-[#003174] p-1.5 rounded-xl">
+          <a href="#" className="flex items-center gap-1 hover:scale-[1.02] transition-transform duration-200">
+            <div className="bg-[] p-1.5 rounded-xl">
               <img 
                 alt="KOLA Logo" 
-                className="h-10 w-auto rounded-lg" 
-                src="https://lh3.googleusercontent.com/aida/AP1WRLtH6WKwu-aqdmtEV-58JNKnyTtHm45ef7o9peulkcmupmOJ1RVs40p8GuC1TGySvO6hkWbrSf0hhtTZzePUwEcVzMHGWorN-f-Jp87Exk3zxWeIKA82Xpx1Ei78vVnJAGZYJj2sq1Q-jVBZnZUhxlxR8mffjD6V7aIZlmcz4WsjPTHmb178Cbb2Xxut1dGwVFwbgat-mhFKcs3hQDIeDdteTB2n-s7HArvtg3Q_rcmhI1yM4clvKf8KqxX4"
+                className="h-15 w-auto rounded-lg" 
+                src="/image/logo.png"
               />
             </div>
             <div className="flex flex-col">
               <span className="font-display text-lg md:text-xl font-extrabold text-[#003174] tracking-tight leading-none">
-                KOLA
+                K-BRIDGE
               </span>
-              <span className="text-[9px] text-[#B81D2D] font-bold tracking-wider uppercase">
-                PT. KOREA EDU WORK INTERNATIONAL
+              <span className="text-[9px] text-[#B81D2D] font-bold tracking-wider uppercase mt-0.5">
+                EDU INTERNATIONAL
               </span>
             </div>
           </a>
 
           {/* Desktop Navigation Links */}
-          <nav className="hidden md:flex items-center gap-8 font-display text-sm font-semibold text-[#434752]">
-            <a href="#keunggulan" className="hover:text-[#003174] hover:scale-105 transition-all duration-200">Keunggulan</a>
-            <a href="#program" className="hover:text-[#003174] hover:scale-105 transition-all duration-200">Pilihan Program</a>
-            <a href="#alur" className="hover:text-[#003174] hover:scale-105 transition-all duration-200">Alur Pendaftaran</a>
-            <a href="#biaya" className="hover:text-[#003174] hover:scale-105 transition-all duration-200">Transparansi Biaya</a>
-            <a href="#faq" className="hover:text-[#003174] hover:scale-105 transition-all duration-200">FAQ</a>
+          <nav className="hidden md:flex items-center gap-2 font-display text-sm font-semibold text-[#434752] relative z-10">
+            {navItems.map((item) => {
+              const isActive = activeTab === item.id;
+              return (
+                <motion.a
+                  key={item.id}
+                  href={`#${item.id}`}
+                  onClick={(e) => handleNavClick(item.id, e)}
+                  whileHover={{ y: -1 }}
+                  whileTap={{ scale: 0.95 }}
+                  className={`relative px-4 py-2 rounded-xl transition-colors duration-200 text-sm font-bold flex items-center ${
+                    isActive ? "text-[#003174]" : "hover:text-[#003174]/80 text-[#5C6170]"
+                  }`}
+                >
+                  {isActive && (
+                    <motion.div
+                      layoutId="activeNavBackground"
+                      className="absolute inset-0 bg-[#003174]/8 rounded-xl -z-10"
+                      transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                    />
+                  )}
+                  {item.label}
+                </motion.a>
+              );
+            })}
           </nav>
 
           {/* Consultation button */}
           <div className="flex items-center gap-3">
             <a 
               href="#konsultasi" 
-              className="bg-[#B81D2D] hover:bg-[#92001B] text-white px-5 py-2.5 rounded-xl font-display text-xs md:text-sm font-bold shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200 text-center"
+              className="bg-[#B81D2D] hover:bg-[#A01321] text-white px-6 py-3 md:px-8 md:py-3.5 rounded-xl font-display text-xs md:text-base font-extrabold text-center tracking-wider shadow-[0_5px_0_0_#003174] hover:shadow-[0_4px_0_0_#003174] hover:translate-y-[1px] active:translate-y-[5px] active:shadow-none transition-all duration-100 block"
             >
-              Konsultasi Gratis
+              KONSULTASI GRATIS
             </a>
           </div>
         </div>
@@ -426,12 +595,33 @@ export default function App() {
               {/* Background solid framing */}
               <div className="absolute inset-0 bg-[#Afc6ff] rounded-3xl transform rotate-3 scale-105 -z-10 opacity-30 shadow-xl" />
               
-              <div className="relative overflow-hidden rounded-3xl shadow-2xl border-4 border-white aspect-[4/3] w-full">
-                <img 
-                  className="w-full h-full object-cover transform hover:scale-105 transition-transform duration-500" 
-                  alt="International students walking in South Korean campus" 
-                  src="https://lh3.googleusercontent.com/aida/AP1WRLsBlgNh9lXQIioqEZ85yqetziMYbs2WFokM2wWd1Z1NlDXfb0-YSv1pvOGZ2BGuUisSMPPO54QcLOhKi2Xkq6c8Mr2KclhnycCr56iD1GiXdtDGclJ6XCVPx928tCXJydS-cI5Uj_9lrM8ALsU7IzdqzlRtt2756YPzQKwccfm_VibGCsoxJqxiQGYyZrCnQDkfdNcN8GcNbXcWOUDHRohXicYWkJ9jzyxShHY9jruafTZqTQZJ8a1bbmFA"
-                />
+              <div className="relative overflow-hidden rounded-3xl shadow-2xl border-4 border-white aspect-[4/3] w-full bg-slate-100">
+                <AnimatePresence mode="wait">
+                  <motion.img 
+                    key={currentSlide}
+                    src={heroSlides[currentSlide]}
+                    initial={{ opacity: 0, scale: 1.05 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.6 }}
+                    className="absolute inset-0 w-full h-full object-cover" 
+                    alt={`International students study and activities slide ${currentSlide + 1}`} 
+                  />
+                </AnimatePresence>
+
+                {/* Slider Indicators */}
+                <div className="absolute bottom-4 right-4 flex gap-1.5 z-20 bg-black/35 backdrop-blur-xs px-2.5 py-1.5 rounded-full">
+                  {heroSlides.map((_, sIdx) => (
+                    <button
+                      key={sIdx}
+                      onClick={() => setCurrentSlide(sIdx)}
+                      className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                        currentSlide === sIdx ? "bg-white w-4" : "bg-white/50 hover:bg-white/80"
+                      }`}
+                      aria-label={`Go to slide ${sIdx + 1}`}
+                    />
+                  ))}
+                </div>
               </div>
 
               {/* Floating Badge (Glassmorphic) */}
@@ -594,6 +784,12 @@ export default function App() {
             <p className="text-[#434752] text-sm md:text-base">
               Pilihlah jalur program pendaftaran yang paling sesuai dengan kualifikasi pendidikan, minat keahlian, dan kemampuan bahasa Korea Anda saat ini.
             </p>
+            <div className="mt-6 bg-[#E7EEFF] border-l-4 border-[#003174] p-4 rounded-r-2xl max-w-2xl mx-auto text-xs md:text-sm flex items-center gap-3 shadow-xs">
+              <span className="text-lg">📢</span>
+              <p className="font-bold text-[#003174] text-left">
+                Skema Seleksi: Seleksi penerimaan mahasiswa dengan skema interview secara langsung baik Online / offline.
+              </p>
+            </div>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12 items-start">
@@ -738,7 +934,7 @@ export default function App() {
                   <div className="grid grid-cols-2 gap-2 mb-6 text-[11px] text-white/90">
                     <div className="flex items-center gap-1.5">
                       <span className="text-[#Afc6ff]">✓</span>
-                      <span>Umur Maksimal Lulus Sekolah + 3 Thn</span>
+                      <span>Umur Maksimal Lulus Sekolah + 5 Thn</span>
                     </div>
                     <div className="flex items-center gap-1.5">
                       <span className="text-[#Afc6ff]">✓</span>
@@ -878,7 +1074,7 @@ export default function App() {
                 </tr>
                 <tr className="border-b border-[#E7EEFF]">
                   <td className="p-4 font-bold text-[#111C2D]">Persyaratan Umur</td>
-                  <td className="p-4 text-center">Maksimal 3 tahun setelah lulus SMA/SMK</td>
+                  <td className="p-4 text-center">Maksimal 5 tahun setelah lulus SMA/SMK</td>
                   <td className="p-4 text-center font-bold text-green-600">Maksimal 35 tahun (sangat fleksibel)</td>
                 </tr>
                 <tr className="border-b border-[#E7EEFF]">
@@ -896,7 +1092,7 @@ export default function App() {
               <div>
                 <h4 className="font-display font-extrabold text-lg md:text-xl text-[#003174] flex items-center gap-2">
                   <GraduationCap className="w-5.5 h-5.5 text-[#B81D2D]" />
-                  <span>Direktori Universitas Mitra Resmi KOLA</span>
+                  <span>Direktori Universitas Mitra Resmi K-BRIDGE EDU INTERNATIONAL</span>
                 </h4>
                 <p className="text-xs text-[#737783] mt-1">Cari dan filter kampus impian Anda di Korea Selatan</p>
               </div>
@@ -934,7 +1130,7 @@ export default function App() {
                     : "bg-white text-slate-600 hover:bg-slate-100 border border-slate-200"
                 }`}
               >
-                👵 Spesialis Caregiver / Vokasi D2
+                👵 Caregiver / Beauty / Business (20)
               </button>
               <button 
                 onClick={() => setUnivCategory("technical")}
@@ -944,65 +1140,102 @@ export default function App() {
                     : "bg-white text-slate-600 hover:bg-slate-100 border border-slate-200"
                 }`}
               >
-                ⚡ Spesialis Teknik / Bahasa D4
+                ⚡ Teknik / Engineering / Agro (16)
+              </button>
+              <button 
+                onClick={() => setUnivCategory("root")}
+                className={`text-xs px-4 py-2 rounded-lg font-bold transition-all ${
+                  univCategory === "root" 
+                    ? "bg-[#0047A0] text-white shadow-sm" 
+                    : "bg-white text-slate-600 hover:bg-slate-100 border border-slate-200"
+                }`}
+              >
+                🔩 Root Industry (14)
               </button>
             </div>
 
             {/* Grid of Universities */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {partnerUniversities
-                .filter(u => {
+            <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
+              {(() => {
+                const filtered = partnerUniversities.filter(u => {
                   const matchCat = univCategory === "all" || u.type === univCategory;
                   const matchSearch = u.name.toLowerCase().includes(univSearch.toLowerCase()) || 
                                       u.location.toLowerCase().includes(univSearch.toLowerCase()) ||
                                       u.programs.some(p => p.toLowerCase().includes(univSearch.toLowerCase()));
                   return matchCat && matchSearch;
-                })
-                .map((u, idx) => (
-                  <div key={idx} className="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm hover:shadow-md transition-all flex flex-col justify-between">
+                });
+                const displayed = showAllUniversities ? filtered : filtered.slice(0, 6);
+                return displayed.map((u, idx) => (
+                  <div key={idx} className="bg-white rounded-2xl p-3 sm:p-5 border border-slate-200 shadow-sm hover:shadow-md transition-all flex flex-col justify-between">
                     <div>
-                      <div className="flex justify-between items-start gap-2 mb-2">
-                        <h5 className="font-display font-bold text-sm md:text-base text-[#111C2D]">
+                      <div className="flex flex-col sm:flex-row justify-between items-start gap-2 mb-2">
+                        <h5 className="font-display font-bold text-xs sm:text-base text-[#111C2D] line-clamp-2 sm:line-clamp-none">
                           {u.name}
                         </h5>
-                        <span className={`text-[9px] font-bold px-2 py-0.5 rounded uppercase tracking-wider shrink-0 ${
+                        <span className={`text-[8px] sm:text-[9px] font-bold px-1.5 py-0.5 rounded uppercase tracking-wider shrink-0 ${
                           u.type === "caregiver" 
                             ? "bg-red-50 text-[#B81D2D]" 
-                            : "bg-blue-50 text-[#003174]"
+                            : u.type === "technical"
+                            ? "bg-blue-50 text-[#003174]"
+                            : "bg-slate-100 text-slate-800"
                         }`}>
-                          {u.type === "caregiver" ? "Vokasi D2" : "Bahasa/Teknik D4"}
+                          {u.type === "caregiver" ? "Vokasi D2" : u.type === "technical" ? "Teknik D4" : "Root"}
                         </span>
                       </div>
 
-                      <div className="flex items-center gap-1 text-xs text-slate-500 mb-3">
-                        <MapPin className="w-3.5 h-3.5 text-[#B81D2D]" />
-                        <span>{u.location}, Korea Selatan</span>
+                      <div className="flex items-center gap-1 text-[10px] sm:text-xs text-slate-500 mb-2 sm:mb-3">
+                        <MapPin className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-[#B81D2D]" />
+                        <span className="truncate">{u.location}</span>
                       </div>
 
-                      <p className="text-xs text-slate-600 leading-relaxed mb-4 italic">
+                      <p className="text-[10px] sm:text-xs text-slate-600 leading-normal sm:leading-relaxed mb-3 sm:mb-4 italic line-clamp-3 sm:line-clamp-none">
                         "{u.merit}"
                       </p>
                     </div>
 
-                    <div className="space-y-2 pt-3 border-t border-slate-100">
+                    <div className="space-y-2 pt-2 sm:pt-3 border-t border-slate-100">
                       <div className="flex flex-wrap gap-1">
                         {u.programs.map((p, pIdx) => (
-                          <span key={pIdx} className="text-[10px] font-medium bg-slate-100 text-slate-700 px-2.5 py-0.5 rounded-full">
+                          <span key={pIdx} className="text-[8px] sm:text-[10px] font-medium bg-slate-100 text-slate-700 px-1.5 sm:px-2.5 py-0.5 rounded-full truncate max-w-full">
                             {p}
                           </span>
                         ))}
                       </div>
                       <a 
                         href="#konsultasi" 
-                        className="inline-flex items-center gap-1 text-[11px] font-bold text-[#003174] hover:text-[#B81D2D] transition-colors mt-1"
+                        className="inline-flex items-center gap-1 text-[10px] sm:text-[11px] font-bold text-[#003174] hover:text-[#B81D2D] transition-colors mt-1"
                       >
-                        <span>Daftar ke kampus ini</span>
-                        <ArrowRight className="w-3 h-3" />
+                        <span>Daftar</span>
+                        <ArrowRight className="w-2.5 h-2.5 sm:w-3 sm:h-3" />
                       </a>
                     </div>
                   </div>
-                ))}
+                ));
+              })()}
             </div>
+
+            {/* Toggle Button for viewing more campuses */}
+            {(() => {
+              const filtered = partnerUniversities.filter(u => {
+                const matchCat = univCategory === "all" || u.type === univCategory;
+                const matchSearch = u.name.toLowerCase().includes(univSearch.toLowerCase()) || 
+                                    u.location.toLowerCase().includes(univSearch.toLowerCase()) ||
+                                    u.programs.some(p => p.toLowerCase().includes(univSearch.toLowerCase()));
+                return matchCat && matchSearch;
+              });
+              if (filtered.length <= 6) return null;
+              return (
+                <div className="flex justify-center mt-8">
+                  <button
+                    onClick={() => setShowAllUniversities(!showAllUniversities)}
+                    className="inline-flex items-center gap-2 bg-[#0047A0] hover:bg-[#003C88] text-white px-8 py-3 rounded-xl font-display text-xs md:text-sm font-bold shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200"
+                  >
+                    <span>{showAllUniversities ? "TAMPILKAN SEBAGIAN" : "LIHAT SEMUA"}</span>
+                    <ChevronDown className={`w-4 h-4 transition-transform duration-300 ${showAllUniversities ? "rotate-180" : ""}`} />
+                  </button>
+                </div>
+              );
+            })()}
 
             {partnerUniversities.filter(u => {
               const matchCat = univCategory === "all" || u.type === univCategory;
@@ -1265,19 +1498,76 @@ export default function App() {
                   <motion.div 
                     initial={{ opacity: 0, scale: 0.95 }}
                     animate={{ opacity: 1, scale: 1 }}
-                    className="bg-green-50 border-2 border-green-200 rounded-2xl p-6 text-center space-y-4"
+                    className="relative bg-green-50 border-2 border-green-200 rounded-2xl p-6 text-center space-y-4 overflow-hidden"
                   >
-                    <div className="w-12 h-12 rounded-full bg-green-100 text-green-600 flex items-center justify-center mx-auto text-xl font-bold">
-                      ✓
+                    {/* Confetti Animation Effect */}
+                    <div className="absolute inset-0 pointer-events-none overflow-hidden flex items-center justify-center">
+                      {confettiParticles.map((p) => (
+                        <motion.div
+                          key={p.id}
+                          initial={{ x: 0, y: 0, scale: 0, rotate: 0, opacity: 1 }}
+                          animate={{ 
+                            x: p.x, 
+                            y: p.y, 
+                            scale: [0, 1.2, 1, 0],
+                            rotate: p.rotation,
+                            opacity: [1, 1, 0.7, 0]
+                          }}
+                          transition={{ 
+                            duration: 1.8, 
+                            ease: [0.1, 0.8, 0.3, 1],
+                            delay: p.delay
+                          }}
+                          style={{
+                            position: "absolute",
+                            width: p.size,
+                            height: p.size,
+                            backgroundColor: p.color,
+                            borderRadius: p.id % 3 === 0 ? "50%" : p.id % 3 === 1 ? "0%" : "2px",
+                          }}
+                        />
+                      ))}
                     </div>
-                    <h4 className="font-display font-bold text-lg text-green-800">Pendaftaran Berhasil Terkirim!</h4>
-                    <p className="text-sm text-green-700 leading-relaxed">
+
+                    {/* Animated Checkmark SVG */}
+                    <div className="relative flex justify-center py-2">
+                      <motion.svg
+                        width="72"
+                        height="72"
+                        viewBox="0 0 50 50"
+                        initial="hidden"
+                        animate="visible"
+                        className="z-10"
+                      >
+                        <motion.circle
+                          cx="25"
+                          cy="25"
+                          r="22"
+                          fill="none"
+                          stroke="#10B981"
+                          strokeWidth="3"
+                          variants={circleVariants}
+                        />
+                        <motion.path
+                          d="M15 26 l7 7 l14 -14"
+                          fill="none"
+                          stroke="#10B981"
+                          strokeWidth="3.5"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          variants={tickVariants}
+                        />
+                      </motion.svg>
+                    </div>
+
+                    <h4 className="font-display font-bold text-lg text-green-800 z-10 relative">Pendaftaran Berhasil Terkirim!</h4>
+                    <p className="text-sm text-green-700 leading-relaxed z-10 relative">
                       Halo <strong className="text-green-900">{formData.name}</strong>, data kelayakan pendaftaran Anda telah tercatat dalam sistem kami.
                     </p>
-                    <p className="text-xs text-[#434752]">
+                    <p className="text-xs text-[#434752] z-10 relative">
                       Tim konsultan kami (Heri Purwanto) akan menghubungi Anda via WhatsApp di nomor pendaftaran Anda sesegera mungkin.
                     </p>
-                    <div className="pt-2 flex flex-col sm:flex-row gap-2 justify-center">
+                    <div className="pt-2 flex flex-col sm:flex-row gap-2 justify-center z-10 relative">
                       <a 
                         href={`https://wa.me/6281290490066?text=Halo%20Korea%20Edu%20Work%2C%20saya%20sudah%20mengisi%20formulir%20pendaftaran%20atas%20nama%20${encodeURIComponent(formData.name)}.%20Mohon%20jadwal%20konsultasi%20selanjutnya.`}
                         target="_blank"
@@ -1562,20 +1852,20 @@ export default function App() {
             
             {/* Column 1: Brand */}
             <div className="md:col-span-5 space-y-4">
-              <div className="flex items-center gap-3">
-                <div className="bg-white p-1.5 rounded-xl">
+              <div className="flex items-center gap-1">
+                <div className="bg-white p-1 rounded-xl">
                   <img 
                     alt="KOLA Logo" 
-                    className="h-8 w-auto rounded-lg" 
-                    src="https://lh3.googleusercontent.com/aida/AP1WRLtH6WKwu-aqdmtEV-58JNKnyTtHm45ef7o9peulkcmupmOJ1RVs40p8GuC1TGySvO6hkWbrSf0hhtTZzePUwEcVzMHGWorN-f-Jp87Exk3zxWeIKA82Xpx1Ei78vVnJAGZYJj2sq1Q-jVBZnZUhxlxR8mffjD6V7aIZlmcz4WsjPTHmb178Cbb2Xxut1dGwVFwbgat-mhFKcs3hQDIeDdteTB2n-s7HArvtg3Q_rcmhI1yM4clvKf8KqxX4"
+                    className="h-10 w-auto rounded-lg" 
+                    src="/image/logo.png"
                   />
                 </div>
                 <div className="flex flex-col">
                   <span className="font-display text-lg font-extrabold text-white tracking-tight">
-                    KOLA
+                    K-BRIDGE
                   </span>
                   <span className="text-[9px] text-[#Afc6ff] font-bold tracking-wider uppercase">
-                    PT. KOREA EDU WORK INTERNATIONAL
+                    K-BRIDGE EDU INTERNATIONAL
                   </span>
                 </div>
               </div>
@@ -1584,10 +1874,10 @@ export default function App() {
               </p>
               <div className="pt-2 flex items-center gap-4">
                 <div className="text-xs bg-white/10 px-3 py-1.5 rounded-lg border border-white/10">
-                  🇮🇩 Indonesia
+                   Indonesia
                 </div>
                 <div className="text-xs bg-white/10 px-3 py-1.5 rounded-lg border border-white/10">
-                  🇰🇷 South Korea
+                   South Korea
                 </div>
               </div>
             </div>
@@ -1633,9 +1923,9 @@ export default function App() {
               <div className="flex gap-2 text-white/80 leading-relaxed">
                 <MapPin className="w-5 h-5 text-[#Afc6ff] shrink-0 mt-0.5" />
                 <address className="not-italic">
-                  Lenteng Agung,<br />
-                  Kec. Jagakarsa, Jakarta Selatan,<br />
-                  DKI Jakarta, Indonesia
+                  Pondok Gede,<br />
+                  Kec. Pondok Gede, Kota Bekasi,<br />
+                  Jawa Barat, Indonesia
                 </address>
               </div>
               <div className="pt-1">
@@ -1653,7 +1943,7 @@ export default function App() {
 
           {/* Bottom Footer Credits */}
           <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-white/60">
-            <p>© 2024 - 2026 KOLA - PT. KOREA EDU WORK INTERNATIONAL. All Rights Reserved.</p>
+            <p>© 2024 - 2026 K-BRIDGE EDU INTERNATIONAL. All Rights Reserved.</p>
             <div className="flex gap-4">
               <a href="#" className="hover:text-white">Syarat & Ketentuan</a>
               <a href="#" className="hover:text-white">Kebijakan Privasi</a>
@@ -1887,7 +2177,7 @@ export default function App() {
                   <form onSubmit={handleUnlockPortal} className="space-y-3">
                     <input 
                       type="password"
-                      placeholder="Masukkan kata sandi (Uji coba: korea123)"
+                      placeholder="Masukkan kata sandi"
                       value={passcode}
                       onChange={(e) => setPasscode(e.target.value)}
                       className="w-full text-center p-3 rounded-xl border border-[#C3C6D4] text-sm focus:outline-none focus:border-[#003174]"
