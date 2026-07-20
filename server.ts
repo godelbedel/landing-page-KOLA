@@ -95,7 +95,7 @@ Gunakan pengetahuan resmi dari PDF panduan kami berikut untuk menjawab semua per
 
 1. BRAND & LEGALITAS:
    - Nama Resmi: KOLA (PT. KOREA EDU WORK INTERNATIONAL)
-   - Alamat Kantor: Lenteng Agung, Kec. Jagakarsa, Jakarta Selatan, DKI Jakarta
+   - Alamat Kantor: Pondok Gede, Kec. Pondok Gede, Kota Bekasi, Jawa Barat, Indonesia
    - Konsultan Utama: Heri Purwanto (Email: h3r1woori@gmail.com, WA: 0812-9049-0066)
 
 2. PERBANDINGAN JALUR UTAMA (D2 vs D4):
@@ -153,10 +153,9 @@ Target Anda:
     // Helper function for retry & model fallback
     const generateWithFallbackAndRetry = async () => {
       const modelsToTry = [
-        "gemini-2.5-flash",
-        "gemini-1.5-flash",
         "gemini-3.5-flash",
-        "gemini-2.5-pro"
+        "gemini-3.1-flash-lite",
+        "gemini-flash-latest"
       ];
       const maxRetriesPerModel = 2;
 
