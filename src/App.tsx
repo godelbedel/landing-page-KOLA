@@ -28,6 +28,18 @@ import {
   Check
 } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
+import Markdown from 'react-markdown';
+
+// Keep Gemini responses as raw text so react-markdown can parse syntax such
+// as **bold**, while explicitly restoring Tailwind's bold weight.
+const chatMarkdownComponents = {
+  p: ({ children }: { children?: React.ReactNode }) => (
+    <p className="mb-2 last:mb-0">{children}</p>
+  ),
+  strong: ({ children }: { children?: React.ReactNode }) => (
+    <strong className="font-bold">{children}</strong>
+  ),
+};
 
 interface Lead {
   id: string;
@@ -1725,7 +1737,11 @@ export default function App() {
                         ? "bg-[#003174] text-white rounded-tr-none" 
                         : "bg-[#F0F3FF] text-[#111C2D] rounded-tl-none border border-[#E7EEFF]"
                     }`}>
-                      <p className="whitespace-pre-line text-xs md:text-sm leading-relaxed">{msg.text}</p>
+                      <div className="text-xs leading-relaxed md:text-sm">
+                        <Markdown components={chatMarkdownComponents}>
+                          {msg.text}
+                        </Markdown>
+                      </div>
                     </div>
                   </div>
                 ))}
@@ -2029,7 +2045,11 @@ export default function App() {
                     <div className={`p-3 rounded-xl max-w-[85%] leading-relaxed ${
                       msg.role === "user" ? "bg-[#003174] text-white rounded-tr-none" : "bg-white text-[#111C2D] border border-[#E7EEFF] rounded-tl-none"
                     }`}>
-                      <p className="whitespace-pre-line text-xs">{msg.text}</p>
+                      <div className="text-xs leading-relaxed">
+                        <Markdown components={chatMarkdownComponents}>
+                          {msg.text}
+                        </Markdown>
+                      </div>
                     </div>
                   </div>
                 ))}
