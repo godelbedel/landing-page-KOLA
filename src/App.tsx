@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { 
   GraduationCap, 
   Briefcase, 
@@ -9,8 +9,6 @@ import {
   Mail, 
   ArrowRight, 
   MessageSquare, 
-  Send, 
-  Bot, 
   Sparkles, 
   Plane, 
   CheckCircle, 
@@ -27,20 +25,7 @@ import {
   Search,
   Check
 } from "lucide-react";
-import { motion, AnimatePresence } from "motion/react";
-import Markdown from 'react-markdown';
-
-// Keep Gemini responses as raw text so react-markdown can parse syntax such
-// as **bold**, while explicitly restoring Tailwind's bold weight.
-const chatMarkdownComponents = {
-  p: ({ children }: { children?: React.ReactNode }) => (
-    <p className="mb-2 last:mb-0">{children}</p>
-  ),
-  strong: ({ children }: { children?: React.ReactNode }) => (
-    <strong className="font-bold">{children}</strong>
-  ),
-};
-
+import { motion, AnimatePresence, type Variants } from "motion/react";
 interface Lead {
   id: string;
   name: string;
@@ -50,11 +35,6 @@ interface Lead {
   programOfInterest: string;
   message?: string;
   createdAt: string;
-}
-
-interface ChatMessage {
-  role: "user" | "model";
-  text: string;
 }
 
 const partnerUniversities = [
@@ -135,7 +115,7 @@ const confettiParticles = Array.from({ length: confettiCount }).map((_, i) => {
   };
 });
 
-const tickVariants = {
+const tickVariants: Variants = {
   hidden: { pathLength: 0, opacity: 0 },
   visible: {
     pathLength: 1,
@@ -144,7 +124,7 @@ const tickVariants = {
   }
 };
 
-const circleVariants = {
+const circleVariants: Variants = {
   hidden: { scale: 0, opacity: 0 },
   visible: {
     scale: 1,
@@ -185,18 +165,6 @@ export default function App() {
   const [leadsLoading, setLeadsLoading] = useState(false);
   const [leadsSearch, setLeadsSearch] = useState("");
   const [portalError, setPortalError] = useState("");
-
-  // AI Chat Consultant states
-  const [chatOpen, setChatOpen] = useState(false);
-  const [chatMessages, setChatMessages] = useState<ChatMessage[]>([
-    {
-      role: "model",
-      text: "Halo! Saya Min-Ji, konsultan AI virtual K-BRIDGE EDU INTERNATIONAL. 🌸\n\nAda yang bisa saya bantu terkait program Kuliah Vokasi atau Kuliah Kerja ke Korea Selatan? Silakan tanyakan apa saja seperti biaya, persyaratan, atau pilihan jurusan!"
-    }
-  ]);
-  const [userInput, setUserInput] = useState("");
-  const [aiTyping, setAiTyping] = useState(false);
-  const chatEndRef = useRef<HTMLDivElement>(null);
 
   // FAQ state
   const [faqOpen, setFaqOpen] = useState<Record<number, boolean>>({
@@ -284,11 +252,6 @@ export default function App() {
     }
   };
 
-  useEffect(() => {
-    if (chatEndRef.current) {
-      chatEndRef.current.scrollIntoView({ behavior: "smooth" });
-    }
-  }, [chatMessages, aiTyping]);
 
   // Handle lead registration
   const handleRegisterSubmit = async (e: React.FormEvent) => {
@@ -349,51 +312,6 @@ export default function App() {
       setPortalError("Sandi salah");
     }
   };
-
-  // Chat message send handler
-  const handleSendMessage = async (e?: React.FormEvent, customText?: string) => {
-    if (e) e.preventDefault();
-    const textToSend = customText || userInput;
-    if (!textToSend.trim()) return;
-
-    const newMessages = [...chatMessages, { role: "user" as const, text: textToSend }];
-    setChatMessages(newMessages);
-    if (!customText) setUserInput("");
-    setAiTyping(true);
-
-    try {
-      const response = await fetch("/api/consult", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ messages: newMessages })
-      });
-      const data = await response.json();
-      if (data.text) {
-        setChatMessages(prev => [...prev, { role: "model" as const, text: data.text }]);
-      } else {
-        setChatMessages(prev => [...prev, { 
-          role: "model" as const, 
-          text: "Maaf, terjadi gangguan koneksi dengan asisten konseling. Silakan coba kirim ulang pesan Anda." 
-        }]);
-      }
-    } catch (error) {
-      console.error("AI Consultation error:", error);
-      setChatMessages(prev => [...prev, { 
-        role: "model" as const, 
-        text: "Maaf, sistem asisten konseling sedang sibuk. Silakan ajukan pertanyaan langsung via WhatsApp Kak Heri!" 
-      }]);
-    } finally {
-      setAiTyping(false);
-    }
-  };
-
-  // Pre-defined quick AI consultation options
-  const quickQuestions = [
-    "Apa syarat utama Kuliah Vokasi?",
-    "Berapa gaji kerja part-time di Korea?",
-    "Apakah harus bisa bahasa Korea dulu?",
-    "Bagaimana rincian biaya Rp 75 Juta?",
-  ];
 
   const timelineSteps = [
     {
@@ -1477,26 +1395,26 @@ export default function App() {
         </div>
       </section>
 
-      {/* INTERACTIVE REGISTRATION & AI CONSULTATION SECTION */}
+      {/* REGISTRATION SECTION */}
       <section id="konsultasi" className="py-20 md:py-28 bg-[#F0F3FF] scroll-mt-20">
         <div className="max-w-7xl mx-auto px-4 md:px-8">
           
           <div className="text-center max-w-3xl mx-auto mb-16">
             <span className="text-[#003174] font-bold text-xs md:text-sm tracking-wider uppercase bg-white px-3.5 py-1 rounded-full shadow-sm">
-              Formulir & Konseling Virtual
+              Formulir Pendaftaran
             </span>
             <h2 className="font-display text-3xl md:text-4xl font-extrabold text-[#111C2D] mt-4 mb-4">
-              Mulai Konsultasi & Pendaftaran Gratis
+              Mulai Pendaftaran Gratis
             </h2>
             <p className="text-[#434752] text-sm md:text-base">
-              Silakan isi formulir pendaftaran kelayakan pendaftaran di bawah atau tanyakan apa pun langsung ke asisten AI virtual kami yang siaga 24 jam.
+              Isi formulir pendaftaran di bawah untuk mendapatkan jadwal interview universitas dan bimbingan dokumen dari tim kami.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+          <div className="max-w-2xl mx-auto">
             
             {/* Left Lead Form */}
-            <div className="lg:col-span-6 bg-white rounded-3xl p-6 md:p-8 shadow-md border border-[#E7EEFF] flex flex-col justify-between">
+            <div className="bg-white rounded-3xl p-6 md:p-8 shadow-md border border-[#E7EEFF] flex flex-col justify-between">
               <div>
                 <h3 className="font-display font-extrabold text-lg text-[#003174] mb-1 flex items-center gap-2">
                   <User className="w-5 h-5 text-[#B81D2D]" />
@@ -1702,102 +1620,6 @@ export default function App() {
               </div>
             </div>
 
-            {/* Right Chat Consultant */}
-            <div className="lg:col-span-6 bg-white rounded-3xl p-6 shadow-md border border-[#E7EEFF] flex flex-col justify-between">
-              
-              {/* Chat Header */}
-              <div className="pb-4 border-b border-[#E7EEFF] flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full bg-[#003174]/10 border border-[#003174]/20 flex items-center justify-center text-xl">
-                    🌸
-                  </div>
-                  <div>
-                    <h3 className="font-display font-bold text-sm md:text-base text-[#003174] flex items-center gap-1.5">
-                      <span>Min-Ji (Konsultan AI)</span>
-                      <span className="w-2 h-2 rounded-full bg-green-500 inline-block animate-pulse" />
-                    </h3>
-                    <p className="text-[10px] text-[#737783]">Aktif 24 Jam • Bahasa Indonesia</p>
-                  </div>
-                </div>
-                <div className="flex items-center gap-1.5 text-[10px] bg-[#E7EEFF] text-[#003174] px-2 py-1 rounded-full font-bold">
-                  <Sparkles className="w-3 h-3 text-[#B81D2D]" />
-                  <span>Powered by Gemini</span>
-                </div>
-              </div>
-
-              {/* Chat Message list */}
-              <div className="flex-1 overflow-y-auto max-h-[300px] py-4 space-y-3 pr-1 text-sm">
-                {chatMessages.map((msg, idx) => (
-                  <div 
-                    key={idx} 
-                    className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}
-                  >
-                    <div className={`max-w-[85%] rounded-2xl p-3.5 ${
-                      msg.role === "user" 
-                        ? "bg-[#003174] text-white rounded-tr-none" 
-                        : "bg-[#F0F3FF] text-[#111C2D] rounded-tl-none border border-[#E7EEFF]"
-                    }`}>
-                      <div className="text-xs leading-relaxed md:text-sm">
-                        <Markdown components={chatMarkdownComponents}>
-                          {msg.text}
-                        </Markdown>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-
-                {aiTyping && (
-                  <div className="flex justify-start">
-                    <div className="bg-[#F0F3FF] text-[#111C2D] rounded-2xl p-3.5 rounded-tl-none border border-[#E7EEFF]">
-                      <div className="flex items-center gap-1">
-                        <span className="w-1.5 h-1.5 bg-[#003174] rounded-full animate-bounce" style={{ animationDelay: "0ms" }} />
-                        <span className="w-1.5 h-1.5 bg-[#003174] rounded-full animate-bounce" style={{ animationDelay: "150ms" }} />
-                        <span className="w-1.5 h-1.5 bg-[#003174] rounded-full animate-bounce" style={{ animationDelay: "300ms" }} />
-                      </div>
-                    </div>
-                  </div>
-                )}
-                <div ref={chatEndRef} />
-              </div>
-
-              {/* Chat quick prompts & text box */}
-              <div className="pt-4 border-t border-[#E7EEFF] space-y-3">
-                
-                {/* Quick prompts */}
-                <div className="flex flex-wrap gap-1.5">
-                  {quickQuestions.map((q, idx) => (
-                    <button
-                      key={idx}
-                      disabled={aiTyping}
-                      onClick={() => handleSendMessage(undefined, q)}
-                      className="text-[10px] font-semibold text-[#003174] bg-[#F0F3FF] hover:bg-[#D8E2FF] border border-[#E7EEFF] rounded-lg px-2 py-1 transition-colors text-left"
-                    >
-                      {q}
-                    </button>
-                  ))}
-                </div>
-
-                <form onSubmit={handleSendMessage} className="flex gap-2">
-                  <input 
-                    type="text"
-                    disabled={aiTyping}
-                    placeholder="Tulis pertanyaan Anda di sini..."
-                    value={userInput}
-                    onChange={(e) => setUserInput(e.target.value)}
-                    className="flex-1 text-xs md:text-sm p-3 rounded-xl border border-[#C3C6D4] bg-white focus:outline-none focus:border-[#003174]"
-                  />
-                  <button 
-                    type="submit"
-                    disabled={aiTyping || !userInput.trim()}
-                    className="bg-[#003174] hover:bg-[#0047A0] disabled:bg-slate-300 text-white p-3 rounded-xl transition-colors"
-                  >
-                    <Send className="w-4 h-4" />
-                  </button>
-                </form>
-              </div>
-
-            </div>
-
           </div>
         </div>
       </section>
@@ -1949,8 +1771,8 @@ export default function App() {
                   href="#konsultasi"
                   className="inline-flex items-center gap-1.5 bg-[#Afc6ff] hover:bg-white text-[#25354A] font-bold text-xs px-3.5 py-2 rounded-lg transition-colors"
                 >
-                  <Bot className="w-3.5 h-3.5" />
-                  <span>Konsultasi AI Virtual</span>
+                  <User className="w-3.5 h-3.5" />
+                  <span>Daftar Konsultasi Gratis</span>
                 </a>
               </div>
             </div>
@@ -2010,117 +1832,6 @@ export default function App() {
           )}
         </AnimatePresence>
 
-        {/* Floating Chat widget panel */}
-        <AnimatePresence>
-          {chatOpen && (
-            <motion.div
-              initial={{ opacity: 0, y: 30, scale: 0.95 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: 30, scale: 0.95 }}
-              className="bg-white rounded-3xl shadow-2xl border border-[#E7EEFF] w-[340px] md:w-[380px] overflow-hidden flex flex-col h-[480px]"
-            >
-              {/* Chat panel header */}
-              <div className="bg-[#003174] text-white p-4 flex justify-between items-center">
-                <div className="flex items-center gap-2.5">
-                  <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-lg">
-                    🌸
-                  </div>
-                  <div>
-                    <h4 className="font-display font-bold text-sm leading-tight">Min-Ji (AI Konsultan)</h4>
-                    <span className="text-[10px] text-white/70">Online • Balasan Instan</span>
-                  </div>
-                </div>
-                <button 
-                  onClick={() => setChatOpen(false)}
-                  className="text-white/85 hover:text-white p-1 rounded-lg hover:bg-white/10"
-                >
-                  <X className="w-5 h-5" />
-                </button>
-              </div>
-
-              {/* Chat panel message space */}
-              <div className="flex-1 overflow-y-auto p-4 space-y-3 bg-[#F9F9FF] text-xs">
-                {chatMessages.map((msg, idx) => (
-                  <div key={idx} className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}>
-                    <div className={`p-3 rounded-xl max-w-[85%] leading-relaxed ${
-                      msg.role === "user" ? "bg-[#003174] text-white rounded-tr-none" : "bg-white text-[#111C2D] border border-[#E7EEFF] rounded-tl-none"
-                    }`}>
-                      <div className="text-xs leading-relaxed">
-                        <Markdown components={chatMarkdownComponents}>
-                          {msg.text}
-                        </Markdown>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-                {aiTyping && (
-                  <div className="flex justify-start">
-                    <div className="bg-white border border-[#E7EEFF] p-3 rounded-xl rounded-tl-none">
-                      <div className="flex items-center gap-1">
-                        <span className="w-1.5 h-1.5 bg-[#003174] rounded-full animate-pulse" />
-                        <span className="w-1.5 h-1.5 bg-[#003174] rounded-full animate-pulse" style={{ animationDelay: "150ms" }} />
-                        <span className="w-1.5 h-1.5 bg-[#003174] rounded-full animate-pulse" style={{ animationDelay: "300ms" }} />
-                      </div>
-                    </div>
-                  </div>
-                )}
-                <div ref={chatEndRef} />
-              </div>
-
-              {/* Chat panel quick prompts */}
-              <div className="p-3 bg-white border-t border-[#E7EEFF] space-y-2">
-                <div className="flex gap-1 overflow-x-auto pb-1 max-w-full">
-                  <button 
-                    disabled={aiTyping}
-                    onClick={() => handleSendMessage(undefined, "Berapa biayanya?")}
-                    className="text-[9px] bg-[#F0F3FF] text-[#003174] font-bold px-2 py-1 rounded-lg border border-[#E7EEFF] shrink-0"
-                  >
-                    Biaya? 💰
-                  </button>
-                  <button 
-                    disabled={aiTyping}
-                    onClick={() => handleSendMessage(undefined, "Apa saja jurusan vokasi?")}
-                    className="text-[9px] bg-[#F0F3FF] text-[#003174] font-bold px-2 py-1 rounded-lg border border-[#E7EEFF] shrink-0"
-                  >
-                    Jurusan? 🎓
-                  </button>
-                  <button 
-                    disabled={aiTyping}
-                    onClick={() => handleSendMessage(undefined, "Apakah ada syarat umur?")}
-                    className="text-[9px] bg-[#F0F3FF] text-[#003174] font-bold px-2 py-1 rounded-lg border border-[#E7EEFF] shrink-0"
-                  >
-                    Syarat Umur? 🔞
-                  </button>
-                </div>
-                
-                {/* Chat panel box */}
-                <form 
-                  onSubmit={(e) => {
-                    e.preventDefault();
-                    handleSendMessage();
-                  }} 
-                  className="flex gap-1.5"
-                >
-                  <input 
-                    type="text"
-                    disabled={aiTyping}
-                    value={userInput}
-                    onChange={(e) => setUserInput(e.target.value)}
-                    placeholder="Ketik pertanyaan untuk Min-Ji..."
-                    className="flex-1 bg-[#F9F9FF] border border-[#C3C6D4] rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-[#003174]"
-                  />
-                  <button 
-                    type="submit"
-                    disabled={aiTyping || !userInput.trim()}
-                    className="bg-[#003174] hover:bg-[#0047A0] text-white p-2.5 rounded-xl transition-colors disabled:bg-slate-300"
-                  >
-                    <Send className="w-3.5 h-3.5" />
-                  </button>
-                </form>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
 
         {/* Main Floating Buttons */}
         <div className="flex gap-2">
@@ -2135,18 +1846,6 @@ export default function App() {
             </button>
           )}
 
-          {/* Chat toggle button */}
-          <button 
-            onClick={() => setChatOpen(!chatOpen)}
-            className="bg-[#B81D2D] hover:bg-[#92001B] text-white p-4 rounded-full shadow-2xl flex items-center justify-center hover:scale-105 transition-all duration-200 relative group"
-            title="Konsultasi AI Instan"
-          >
-            <MessageSquare className="w-6 h-6" />
-            <span className="absolute right-full mr-2 bg-[#003174] text-white text-[10px] font-bold px-2.5 py-1 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap shadow-md pointer-events-none">
-              Konsultasi AI Virtual 🌸
-            </span>
-            <span className="absolute -top-1 -right-1 w-3.5 h-3.5 bg-yellow-400 rounded-full border-2 border-white animate-ping" />
-          </button>
         </div>
 
       </div>
