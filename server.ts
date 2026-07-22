@@ -1,12 +1,17 @@
+import dotenv from "dotenv";
+dotenv.config();
+
 import express from "express";
 import path from "path";
-import dotenv from "dotenv";
 import { createServer as createViteServer } from "vite";
-
-dotenv.config();
+import { Redis } from "@upstash/redis";
 
 const app = express();
 const PORT = 3000;
+const redis = new Redis({
+  url: process.env.KV_REST_API_URL || process.env.UPSTASH_REDIS_REST_URL,
+  token: process.env.KV_REST_API_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN,
+});
 
 app.use(express.json());
 
@@ -21,16 +26,14 @@ interface Lead {
   createdAt: string;
 }
 
-const leads: Lead[] = [];
-
-app.post("/api/leads", (req, res) => {
+app.post("/api/leads", async (req, res) => {
   const { name, whatsapp, email, education, programOfInterest, message } = req.body;
 
   if (!name || !whatsapp) {
     return res.status(400).json({ error: "Nama dan Nomor WhatsApp wajib diisi." });
   }
 
-  const newLead: Lead = {
+  const userData: Lead = {
     id: Math.random().toString(36).substring(2, 9),
     name,
     whatsapp,
@@ -41,12 +44,24 @@ app.post("/api/leads", (req, res) => {
     createdAt: new Date().toISOString(),
   };
 
-  leads.push(newLead);
-  return res.status(201).json({ success: true, lead: newLead });
+  try {
+    await redis.lpush("registrations", JSON.stringify(userData));
+    return res.status(201).json({ success: true, lead: userData });
+  } catch (error) {
+    console.error("Failed to save registration to Redis:", error);
+    return res.status(500).json({ error: "Gagal menyimpan data pendaftaran." });
+  }
 });
 
-app.get("/api/leads", (_req, res) => {
-  return res.json({ success: true, leads });
+app.get("/api/leads", async (_req, res) => {
+  try {
+    const registrations = await redis.lrange<string>("registrations", 0, -1);
+    const leads = registrations.map((registration) => JSON.parse(registration) as Lead);
+    return res.json({ success: true, leads });
+  } catch (error) {
+    console.error("Failed to retrieve registrations from Redis:", error);
+    return res.status(500).json({ error: "Gagal mengambil data pendaftaran." });
+  }
 });
 
 async function startServer() {

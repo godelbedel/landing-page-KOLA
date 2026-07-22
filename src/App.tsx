@@ -413,10 +413,10 @@ export default function App() {
             </div>
             <div className="flex flex-col">
               <span className="font-display text-lg md:text-xl font-extrabold text-[#003174] tracking-tight leading-none">
-                K-BRIDGE
+                URI GONGBU
               </span>
               <span className="text-[9px] text-[#B81D2D] font-bold tracking-wider uppercase mt-0.5">
-                EDU INTERNATIONAL
+                K-BRIDGE INTERNATIONAL
               </span>
             </div>
           </a>
@@ -824,8 +824,8 @@ export default function App() {
                         </div>
                         <div className="p-4 rounded-2xl bg-[#F5F7FF] border border-[#E7EEFF] flex flex-col justify-between">
                           <div>
-                            <span className="text-sm font-bold text-[#003174] block mb-1">⚠️ Ketentuan Jurusan Lain</span>
-                            <p className="text-[11px] text-[#434752] leading-relaxed">
+                            <span className="text-sm font-bold text-red-600 block mb-1">⚠️ Ketentuan Jurusan Lain</span>
+                            <p className="text-[11px] text-red-600 leading-relaxed">
                               Untuk bidang teknik/industri lainnya (elektrik, otomotif, mesin), pendaftar D2 wajib memiliki sertifikat TOPIK level 2-3 dari Indonesia. Jika belum punya, disarankan mengambil jalur D4 terlebih dahulu.
                             </p>
                           </div>
@@ -956,14 +956,14 @@ export default function App() {
           <div className="bg-white rounded-3xl p-6 md:p-8 border border-[#E7EEFF] shadow-sm overflow-x-auto">
             <h4 className="font-display font-extrabold text-lg text-[#111C2D] mb-4 flex items-center gap-2">
               <Sparkles className="w-5 h-5 text-[#B81D2D]" />
-              <span>Matriks Perbandingan Cepat Program (PDF Page 8)</span>
+              <span>Matriks Perbandingan Cepat Program</span>
             </h4>
             <table className="w-full text-left border-collapse text-xs md:text-sm min-w-[700px]">
               <thead>
-                <tr className="border-b border-[#E7EEFF] bg-[#F0F3FF] text-[#003174] font-bold text-center">
-                  <th className="p-4 text-left">Aspek Perbandingan</th>
-                  <th className="p-4">Jalur D4 (Kuliah Bahasa)</th>
-                  <th className="p-4">Jalur D2 (Kuliah Vokasi)</th>
+                <tr className="border-b border- bg-[#003174] text-[#ffffff] font-bold text-center">
+                  <th className="p-4 text-left">ASPEK PERBANDINGAN</th>
+                  <th className="p-4">JALUR D4 (KULIAH BAHASA)</th>
+                  <th className="p-4">JALUR D2 (KULIAH VOKASI)</th>
                 </tr>
               </thead>
               <tbody>
@@ -1271,18 +1271,11 @@ export default function App() {
                             {step.details}
                           </div>
 
-                          <div className="mt-4 pt-4 border-t border-[#E7EEFF]/60 flex flex-col sm:flex-row gap-3 items-start sm:items-center justify-between">
+                          <div className="mt-4 pt-4 border-t border-[#E7EEFF]/60">
                             <span className="text-xs text-[#737783] font-bold flex items-center gap-1.5">
                               <CheckCircle className="w-4 h-4 text-green-500 shrink-0" />
                               <span>Bimbingan penuh dari agen Korea Edu Work</span>
                             </span>
-                            <a 
-                              href="#konsultasi" 
-                              className="text-xs font-bold text-[#003174] hover:text-[#B81D2D] transition-colors flex items-center gap-1"
-                            >
-                              <span>Tanya Min-Ji terkait tahap ini</span>
-                              <ArrowRight className="w-3.5 h-3.5" />
-                            </a>
                           </div>
                         </div>
                       </motion.div>
@@ -1522,7 +1515,7 @@ export default function App() {
                       <input 
                         type="text" 
                         required
-                        placeholder="Contoh: Heri Purwanto"
+                        placeholder="Tulis nama lengkap anda"
                         value={formData.name}
                         onChange={(e) => setFormData({...formData, name: e.target.value})}
                         className="w-full text-sm p-3 rounded-xl border border-[#C3C6D4] focus:outline-none focus:border-[#003174] focus:ring-2 focus:ring-[#003174]/20"
@@ -1535,7 +1528,7 @@ export default function App() {
                         <input 
                           type="tel" 
                           required
-                          placeholder="Contoh: 081290490066"
+                          placeholder="masukan nomer WhatsApp"
                           value={formData.whatsapp}
                           onChange={(e) => setFormData({...formData, whatsapp: e.target.value})}
                           className="w-full text-sm p-3 rounded-xl border border-[#C3C6D4] focus:outline-none focus:border-[#003174] focus:ring-2 focus:ring-[#003174]/20"
@@ -1545,7 +1538,7 @@ export default function App() {
                         <label className="block text-xs font-bold text-[#111C2D] mb-1">Alamat Email (Opsional)</label>
                         <input 
                           type="email" 
-                          placeholder="alamat@email.com"
+                          placeholder="Contoh : alamat@email.com"
                           value={formData.email}
                           onChange={(e) => setFormData({...formData, email: e.target.value})}
                           className="w-full text-sm p-3 rounded-xl border border-[#C3C6D4] focus:outline-none focus:border-[#003174] focus:ring-2 focus:ring-[#003174]/20"
@@ -1700,10 +1693,10 @@ export default function App() {
                 </div>
                 <div className="flex flex-col">
                   <span className="font-display text-lg font-extrabold text-white tracking-tight">
-                    K-BRIDGE
+                    URI GONGBU
                   </span>
                   <span className="text-[9px] text-[#Afc6ff] font-bold tracking-wider uppercase">
-                    K-BRIDGE EDU INTERNATIONAL
+                    K-BRIDGE INTERNATIONAL
                   </span>
                 </div>
               </div>
