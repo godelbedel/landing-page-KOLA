@@ -1274,7 +1274,7 @@ export default function App() {
                           <div className="mt-4 pt-4 border-t border-[#E7EEFF]/60">
                             <span className="text-xs text-[#737783] font-bold flex items-center gap-1.5">
                               <CheckCircle className="w-4 h-4 text-green-500 shrink-0" />
-                              <span>Bimbingan penuh dari agen Korea Edu Work</span>
+                              <span>Bimbingan penuh dari agen K-Bridge International</span>
                             </span>
                           </div>
                         </div>
@@ -1492,7 +1492,7 @@ export default function App() {
                     </p>
                     <div className="pt-2 flex flex-col sm:flex-row gap-2 justify-center z-10 relative">
                       <a 
-                        href={`https://wa.me/6281290490066?text=Halo%20Korea%20Edu%20Work%2C%20saya%20sudah%20mengisi%20formulir%20pendaftaran%20atas%20nama%20${encodeURIComponent(formData.name)}.%20Mohon%20jadwal%20konsultasi%20selanjutnya.`}
+                        href={`https://wa.me/6281290490066?text=Halo%20K-Bridge%20International%2C%20saya%20sudah%20mengisi%20formulir%20pendaftaran%20atas%20nama%20${encodeURIComponent(formData.name)}.%20Mohon%20jadwal%20konsultasi%20selanjutnya.`}
                         target="_blank"
                         rel="noreferrer"
                         className="bg-green-600 hover:bg-green-700 text-white text-xs font-bold px-4 py-2.5 rounded-lg inline-flex items-center justify-center gap-1.5"
@@ -1629,7 +1629,7 @@ export default function App() {
               Paling Sering Ditanyakan (FAQ)
             </h2>
             <p className="text-[#434752] text-sm md:text-base">
-              Berikut adalah kompilasi jawaban dari pertanyaan-pertanyaan mendasar terkait keberangkatan, biaya, dan kemitraan Korea Edu Work.
+              Berikut adalah kompilasi jawaban dari pertanyaan-pertanyaan mendasar terkait keberangkatan, biaya, dan kemitraan K-Bridge International.
             </p>
           </div>
 
@@ -1859,7 +1859,7 @@ export default function App() {
                 <div className="flex items-center gap-3">
                   <Database className="w-5 h-5 text-[#Afc6ff]" />
                   <div>
-                    <h3 className="font-display font-extrabold text-base md:text-lg">Portal CRM Calon Peserta Korea Edu Work</h3>
+                    <h3 className="font-display font-extrabold text-base md:text-lg">Portal CRM Calon Peserta K-Bridge International</h3>
                     <p className="text-xs text-white/70">Kelola dan lihat leads pendaftaran siswa secara real-time</p>
                   </div>
                 </div>
