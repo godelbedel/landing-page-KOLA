@@ -383,7 +383,7 @@ export default function App() {
     },
     {
       q: "Apakah pendapatan cukup untuk bayar kuliah ?",
-      a: "Gaji UMR korea tahun 2026 adalah KRW 10.200/jam.\n\nPerhitungan kerja sampingan:\n- Kerja 4 hari 8 jam dalam 1 bulan IDR 15.500.000\n- Libur semester 2 bulan gaji full day harian KRW 150.000 (IDR 1.800.000/hari) 6 hari kerja selama 2 bulan adalah IDR 85jt.\n\nArtinya penghasilan selama libur kuliah sudah mencukupi untuk membayar biaya UKT dan asrama."
+      a: "Dengan standar gaji UMR Korea Selatan tahun 2026 sebesar KRW 10.200/jam, biaya pendidikan dan hidup bisa ditutupi dengan bekerja paruh waktu. Sebagai simulasi, jika kamu bekerja sampingan selama kuliah (8 jam/hari, 4 hari seminggu), kamu bisa mengantongi sekitar Rp15 jutaan per bulan, atau total Rp62,6 juta dalam satu semester (4 bulan). Pendapatan ini bisa melonjak drastis saat libur semester (2 bulan) jika kamu bekerja full-time dengan estimasi penghasilan Rp69,1 juta. Jika ditotal, estimasi pendapatan selama satu semester dan masa libur mencapai Rp129,1 juta. Artinya, penghasilan dari bekerja penuh waktu selama 2 bulan libur semester saja sebenarnya sudah lebih dari cukup untuk menutupi seluruh biaya UKT dan asrama!."
     },
     {
       q: "Bagaimana Pembayaran proses?",
