@@ -26,6 +26,13 @@ interface Lead {
   createdAt: string;
 }
 
+function parseRegistration(registration: unknown): Lead {
+  if (typeof registration === "string") {
+    return JSON.parse(registration) as Lead;
+  }
+  return registration as Lead;
+}
+
 app.post("/api/leads", async (req, res) => {
   const { name, whatsapp, email, education, programOfInterest, message } = req.body;
 
@@ -55,8 +62,8 @@ app.post("/api/leads", async (req, res) => {
 
 app.get("/api/leads", async (_req, res) => {
   try {
-    const registrations = await redis.lrange<string>("registrations", 0, -1);
-    const leads = registrations.map((registration) => JSON.parse(registration) as Lead);
+    const registrations = await redis.lrange("registrations", 0, -1);
+    const leads = (registrations ?? []).map(parseRegistration);
     return res.json({ success: true, leads });
   } catch (error) {
     console.error("Failed to retrieve registrations from Redis:", error);

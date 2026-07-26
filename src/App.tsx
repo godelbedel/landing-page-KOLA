@@ -164,6 +164,7 @@ export default function App() {
   const [leads, setLeads] = useState<Lead[]>([]);
   const [leadsLoading, setLeadsLoading] = useState(false);
   const [leadsSearch, setLeadsSearch] = useState("");
+  const [leadsError, setLeadsError] = useState("");
   const [portalError, setPortalError] = useState("");
 
   // FAQ state
@@ -268,8 +269,9 @@ export default function App() {
       const data = await response.json();
       if (data.success) {
         setSubmitSuccess(true);
-        // Automatically add lead local state if dashboard is open
-        setLeads(prev => [data.lead, ...prev]);
+        if (isUnlocked) {
+          fetchLeads();
+        }
         // Reset form except name for personalized chatbot greeting
         setFormData(prev => ({
           ...prev,
@@ -285,21 +287,29 @@ export default function App() {
     }
   };
 
-  // Fetch leads for dashboard
+  // Fetch leads for dashboard from Redis via API
   const fetchLeads = async () => {
     setLeadsLoading(true);
+    setLeadsError("");
     try {
       const response = await fetch("/api/leads");
       const data = await response.json();
-      if (data.success) {
-        setLeads(data.leads);
+      if (!response.ok || !data.success) {
+        setLeadsError(data.error || "Gagal memuat data pendaftaran.");
+        return;
       }
+      setLeads(Array.isArray(data.leads) ? data.leads : []);
     } catch (error) {
       console.error("Error fetching leads:", error);
+      setLeadsError("Gagal terhubung ke server. Pastikan API berjalan.");
     } finally {
       setLeadsLoading(false);
     }
   };
+
+  useEffect(() => {
+    fetchLeads();
+  }, []);
 
   // Handle passcode verification for CRM portal
   const handleUnlockPortal = (e: React.FormEvent) => {
@@ -383,7 +393,7 @@ export default function App() {
     },
     {
       q: "Apakah pendapatan cukup untuk bayar kuliah ?",
-      a: "Gaji UMR korea tahun 2026 adalah KRW 10.200/jam.\n\nPerhitungan kerja sampingan:\n- Kerja 4 hari 8 jam dalam 1 bulan IDR 15.500.000\n- Libur semester 2 bulan gaji full day harian KRW 150.000 (IDR 1.800.000/hari) 6 hari kerja selama 2 bulan adalah IDR 85jt.\n\nArtinya penghasilan selama libur kuliah sudah mencukupi untuk membayar biaya UKT dan asrama."
+      a: "Dengan standar gaji UMR Korea Selatan tahun 2026 sebesar KRW 10.200/jam, biaya pendidikan dan hidup bisa ditutupi dengan bekerja paruh waktu. Sebagai simulasi, jika kamu bekerja sampingan selama kuliah (8 jam/hari, 4 hari seminggu), kamu bisa mengantongi sekitar Rp15 jutaan per bulan, atau total Rp62,6 juta dalam satu semester (4 bulan). Pendapatan ini bisa melonjak drastis saat libur semester (2 bulan) jika kamu bekerja full-time dengan estimasi penghasilan Rp69,1 juta. Jika ditotal, estimasi pendapatan selama satu semester dan masa libur mencapai Rp129,1 juta. Artinya, penghasilan dari bekerja penuh waktu selama 2 bulan libur semester saja sebenarnya sudah lebih dari cukup untuk menutupi seluruh biaya UKT dan asrama!."
     },
     {
       q: "Bagaimana Pembayaran proses?",
@@ -1949,6 +1959,16 @@ export default function App() {
                       <div className="p-12 text-center text-[#737783] space-y-2">
                         <RefreshCw className="w-8 h-8 animate-spin mx-auto text-[#003174]" />
                         <p className="text-xs">Sedang memuat data calon peserta...</p>
+                      </div>
+                    ) : leadsError ? (
+                      <div className="p-12 text-center text-[#737783] space-y-3 bg-red-50">
+                        <p className="text-xs text-[#B81D2D] font-bold">{leadsError}</p>
+                        <button
+                          onClick={fetchLeads}
+                          className="text-xs text-[#003174] font-bold hover:underline"
+                        >
+                          Coba lagi
+                        </button>
                       </div>
                     ) : leads.length === 0 ? (
                       <div className="p-12 text-center text-[#737783] space-y-2 bg-[#F9F9FF]">
