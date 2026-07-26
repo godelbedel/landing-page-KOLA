@@ -17,6 +17,13 @@ interface Lead {
   createdAt: string;
 }
 
+function parseRegistration(registration: unknown): Lead {
+  if (typeof registration === "string") {
+    return JSON.parse(registration) as Lead;
+  }
+  return registration as Lead;
+}
+
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method === "POST") {
     const { name, whatsapp, email, education, programOfInterest, message } = req.body;
@@ -47,8 +54,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   if (req.method === "GET") {
     try {
-      const registrations = await redis.lrange<string>("registrations", 0, -1);
-      const leads = registrations.map((registration) => JSON.parse(registration) as Lead);
+      const registrations = await redis.lrange("registrations", 0, -1);
+      const leads = (registrations ?? []).map(parseRegistration);
       return res.status(200).json({ success: true, leads });
     } catch (error) {
       console.error("Failed to retrieve registrations from Redis:", error);
