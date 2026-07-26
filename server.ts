@@ -71,6 +71,53 @@ app.get("/api/leads", async (_req, res) => {
   }
 });
 
+app.delete("/api/leads", async (req, res) => {
+  const { id } = req.body || {};
+  if (!id) {
+    return res.status(400).json({ error: "ID pendaftar wajib disertakan." });
+  }
+
+  try {
+    const rawItems = (await redis.lrange("registrations", 0, -1)) || [];
+    for (const item of rawItems) {
+      const parsed = parseRegistration(item);
+      if (parsed.id === id) {
+        const itemToRemove = typeof item === "string" ? item : JSON.stringify(item);
+        await redis.lrem("registrations", 1, itemToRemove);
+        return res.status(200).json({ success: true, message: "Data berhasil dihapus." });
+      }
+    }
+    return res.status(404).json({ error: "Data tidak ditemukan." });
+  } catch (error) {
+    console.error("Failed to delete registration from Redis:", error);
+    return res.status(500).json({ error: "Gagal menghapus data pendaftaran." });
+  }
+});
+
+app.patch("/api/leads", async (req, res) => {
+  const { id, isContacted } = req.body || {};
+  if (!id || typeof isContacted !== "boolean") {
+    return res.status(400).json({ error: "ID dan status isContacted (boolean) wajib disertakan." });
+  }
+
+  try {
+    const rawItems = (await redis.lrange("registrations", 0, -1)) || [];
+    for (let index = 0; index < rawItems.length; index++) {
+      const item = rawItems[index];
+      const parsed = parseRegistration(item);
+      if (parsed.id === id) {
+        parsed.isContacted = isContacted;
+        await redis.lset("registrations", index, JSON.stringify(parsed));
+        return res.status(200).json({ success: true, lead: parsed });
+      }
+    }
+    return res.status(404).json({ error: "Data tidak ditemukan." });
+  } catch (error) {
+    console.error("Failed to update registration status in Redis:", error);
+    return res.status(500).json({ error: "Gagal memperbarui status pendaftaran." });
+  }
+});
+
 async function startServer() {
   if (process.env.NODE_ENV !== "production") {
     const vite = await createViteServer({

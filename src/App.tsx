@@ -23,7 +23,8 @@ import {
   X,
   RefreshCw,
   Search,
-  Check
+  Check,
+  Trash2
 } from "lucide-react";
 import { motion, AnimatePresence, type Variants } from "motion/react";
 interface Lead {
@@ -35,6 +36,7 @@ interface Lead {
   programOfInterest: string;
   message?: string;
   createdAt: string;
+  isContacted?: boolean;
 }
 
 const partnerUniversities = [
@@ -304,6 +306,54 @@ export default function App() {
       setLeadsError("Gagal terhubung ke server. Pastikan API berjalan.");
     } finally {
       setLeadsLoading(false);
+    }
+  };
+
+  // Delete lead handler with window.confirm and state filter
+  const handleDeleteLead = async (id: string) => {
+    const confirmed = window.confirm("Yakin ingin menghapus data peserta ini?");
+    if (!confirmed) return;
+
+    try {
+      const response = await fetch("/api/leads", {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id }),
+      });
+      const data = await response.json();
+      if (response.ok && data.success) {
+        setLeads((prev) => prev.filter((lead) => lead.id !== id));
+      } else {
+        alert(data.error || "Gagal menghapus data.");
+      }
+    } catch (error) {
+      console.error("Error deleting lead:", error);
+      alert("Terjadi kesalahan jaringan saat menghapus data.");
+    }
+  };
+
+  // Toggle isContacted status handler with optimistic React state update
+  const handleToggleContacted = async (id: string, currentStatus: boolean = false) => {
+    const newStatus = !currentStatus;
+    try {
+      const response = await fetch("/api/leads", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id, isContacted: newStatus }),
+      });
+      const data = await response.json();
+      if (response.ok && data.success) {
+        setLeads((prev) =>
+          prev.map((lead) =>
+            lead.id === id ? { ...lead, isContacted: newStatus } : lead
+          )
+        );
+      } else {
+        alert(data.error || "Gagal memperbarui status.");
+      }
+    } catch (error) {
+      console.error("Error updating lead status:", error);
+      alert("Terjadi kesalahan jaringan saat memperbarui status.");
     }
   };
 
@@ -1982,6 +2032,7 @@ export default function App() {
                       <table className="w-full text-left border-collapse text-xs min-w-[700px]">
                         <thead>
                           <tr className="bg-[#F0F3FF] text-[#003174] font-bold border-b border-[#E7EEFF]">
+                            <th className="p-3 text-center">Status</th>
                             <th className="p-3">Tanggal Masuk</th>
                             <th className="p-3">Nama Lengkap</th>
                             <th className="p-3">Nomor WhatsApp</th>
@@ -1998,8 +2049,24 @@ export default function App() {
                               l.whatsapp.includes(leadsSearch) ||
                               l.email.toLowerCase().includes(leadsSearch.toLowerCase())
                             )
-                            .map((l, index) => (
-                              <tr key={l.id} className="border-b border-[#E7EEFF] hover:bg-[#F9F9FF] transition-colors">
+                            .map((l) => (
+                              <tr 
+                                key={l.id} 
+                                className={`border-b border-[#E7EEFF] transition-colors ${
+                                  l.isContacted 
+                                    ? "bg-slate-50/80 opacity-75" 
+                                    : "hover:bg-[#F9F9FF]"
+                                }`}
+                              >
+                                <td className="p-3 text-center">
+                                  <input 
+                                    type="checkbox"
+                                    checked={!!l.isContacted}
+                                    onChange={() => handleToggleContacted(l.id, l.isContacted)}
+                                    className="w-4 h-4 cursor-pointer accent-[#003174] rounded"
+                                    title="Tandai Selesai Di-chat"
+                                  />
+                                </td>
                                 <td className="p-3 text-[#737783] font-mono whitespace-nowrap">
                                   {new Date(l.createdAt).toLocaleDateString("id-ID", {
                                     day: "2-digit",
@@ -2008,7 +2075,9 @@ export default function App() {
                                     minute: "2-digit"
                                   })}
                                 </td>
-                                <td className="p-3 font-bold text-[#111C2D]">{l.name}</td>
+                                <td className={`p-3 font-bold ${l.isContacted ? "line-through text-slate-500" : "text-[#111C2D]"}`}>
+                                  {l.name}
+                                </td>
                                 <td className="p-3 font-mono font-medium text-[#003174]">{l.whatsapp}</td>
                                 <td className="p-3">
                                   <span className="bg-[#E7EEFF] text-[#003174] px-2 py-0.5 rounded-full font-bold text-[10px]">
@@ -2028,14 +2097,33 @@ export default function App() {
                                   {l.message || "-"}
                                 </td>
                                 <td className="p-3 text-center">
-                                  <a 
-                                    href={`https://wa.me/${l.whatsapp.replace(/^0/, "62")}?text=Halo%20${encodeURIComponent(l.name)}%2C%20saya%20Heri%20Purwanto%20dari%20Korea%20Edu%20Work.%20Terima%20kasih%20telah%20mendaftar%20di%20website%20kami.`}
-                                    target="_blank"
-                                    rel="noreferrer"
-                                    className="bg-green-500 hover:bg-green-600 text-white px-2.5 py-1 rounded-lg font-bold text-[10px] transition-colors inline-block"
-                                  >
-                                    Chat WA
-                                  </a>
+                                  <div className="flex items-center justify-center gap-1.5">
+                                    {l.isContacted ? (
+                                      <button 
+                                        onClick={() => handleToggleContacted(l.id, true)}
+                                        className="bg-slate-200 hover:bg-slate-300 text-slate-700 px-2.5 py-1 rounded-lg font-bold text-[10px] transition-colors inline-flex items-center gap-1"
+                                        title="Klik untuk ubah status ke belum di-chat"
+                                      >
+                                        ✅ Selesai Di-chat
+                                      </button>
+                                    ) : (
+                                      <a 
+                                        href={`https://wa.me/${l.whatsapp.replace(/^0/, "62")}?text=Halo%20${encodeURIComponent(l.name)}%2C%20saya%20Heri%20Purwanto%20dari%20Korea%20Edu%20Work.%20Terima%20kasih%20telah%20mendaftar%20di%20website%20kami.`}
+                                        target="_blank"
+                                        rel="noreferrer"
+                                        className="bg-green-500 hover:bg-green-600 text-white px-2.5 py-1 rounded-lg font-bold text-[10px] transition-colors inline-block"
+                                      >
+                                        Chat WA
+                                      </a>
+                                    )}
+                                    <button
+                                      onClick={() => handleDeleteLead(l.id)}
+                                      className="p-1 rounded-lg hover:bg-red-100 text-red-500 hover:text-red-700 transition-colors"
+                                      title="Hapus Data Peserta"
+                                    >
+                                      <Trash2 className="w-3.5 h-3.5" />
+                                    </button>
+                                  </div>
                                 </td>
                               </tr>
                             ))}
