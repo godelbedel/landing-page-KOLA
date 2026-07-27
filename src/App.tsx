@@ -39,6 +39,9 @@ interface Lead {
   isContacted?: boolean;
 }
 
+const whatsappNumberE164 = "6282114494012";
+const whatsappDisplayNumber = "+62 821-1449-4012";
+
 const partnerUniversities = [
   // 1. Caregiver / Beauty / Business (20 campuses)
   { name: "Sahmyook Health University", location: "Seoul", type: "caregiver", programs: ["Caregiver (D2)", "Global Care (D2)"], merit: "Kampus kesehatan ternama di ibukota Seoul dengan koneksi kerja rumah sakit lansia elit." },
@@ -1552,7 +1555,7 @@ export default function App() {
                     </p>
                     <div className="pt-2 flex flex-col sm:flex-row gap-2 justify-center z-10 relative">
                       <a 
-                        href={`https://wa.me/6281290490066?text=Halo%20K-Bridge%20International%2C%20saya%20sudah%20mengisi%20formulir%20pendaftaran%20atas%20nama%20${encodeURIComponent(formData.name)}.%20Mohon%20jadwal%20konsultasi%20selanjutnya.`}
+                        href={`https://wa.me/${whatsappNumberE164}?text=Halo%20K-Bridge%20International%2C%20saya%20sudah%20mengisi%20formulir%20pendaftaran%20atas%20nama%20${encodeURIComponent(formData.name)}.%20Mohon%20jadwal%20konsultasi%20selanjutnya.`}
                         target="_blank"
                         rel="noreferrer"
                         className="bg-green-600 hover:bg-green-700 text-white text-xs font-bold px-4 py-2.5 rounded-lg inline-flex items-center justify-center gap-1.5"
@@ -1785,13 +1788,13 @@ export default function App() {
                 </li>
                 <li>
                   <a 
-                    href="https://wa.me/6281290490066" 
+                    href={`https://wa.me/${whatsappNumberE164}`} 
                     target="_blank" 
                     rel="noreferrer"
                     className="flex items-center gap-2 hover:text-white transition-colors group"
                   >
                     <Phone className="w-4 h-4 text-[#Afc6ff] group-hover:scale-110 transition-transform" />
-                    <span>WhatsApp: 0812-9049-0066</span>
+                    <span>WhatsApp: {whatsappDisplayNumber}</span>
                   </a>
                 </li>
                 <li>
@@ -1874,7 +1877,7 @@ export default function App() {
               </div>
               <p className="text-white/80 leading-relaxed">Hubungi Kak Heri via WhatsApp langsung agar jadwal interview bisa diamankan segera.</p>
               <a 
-                href="https://wa.me/6281290490066"
+                href={`https://wa.me/${whatsappNumberE164}`}
                 target="_blank"
                 rel="noreferrer"
                 className="block text-center bg-[#B81D2D] hover:bg-[#92001B] py-1.5 rounded-lg font-bold"
